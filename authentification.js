@@ -89,6 +89,7 @@ const displayErrorsSignin = (dataJSON) => {
 
     if(dataJSON['okConn']) {
         alert(dataJSON['okConn']);
+        document.location.href="profil.php"; 
     }
 }
 

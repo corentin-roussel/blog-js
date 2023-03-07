@@ -12,7 +12,7 @@
 <?php require_once 'User.php' ?>
 
 <body>
-    <?php //require_once 'header.php' ?>
+    <?php require_once 'header.php' ?>
     <?php if (session_status() == PHP_SESSION_NONE){ session_start();} ?>
 
     <main id="main">
@@ -26,7 +26,7 @@
 
     </main>
 
-    <?php //require_once 'footer.php' ?>
+    <?php require_once 'footer.php' ?>
 
 </body>
 
