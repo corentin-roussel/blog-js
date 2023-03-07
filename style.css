@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*********************************HEADER*********************************/
+
+#flex-header {
+    display: flex;
+    justify-content: space-around;
+    background-color: black;
+}
+
+.link {
+    border: solid 0px;
+    background-color: grey;
+    margin: 1rem;
+    text-decoration: none;
+    color: white;
+    padding: 1rem;
+    box-shadow: 6px 6px 2px 1px rgba(0, 0, 255, .2);
+}
+
+/*********************************MAIN*********************************/
+
+
+/*********************************FOOTER*********************************/
+
+#flex-footer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+}
+
+.about-blog {
+    margin: 1rem;
+}
+
+.link-blog {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+.contact-blog {
+    margin: 1rem;
+}
