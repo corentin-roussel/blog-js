@@ -1,3 +1,19 @@
+/*********************************VARIABLES*********************************/
+:root {
+    --theme-header-background-color: hsl(0,0%,100%);
+    --theme-footer-background-color: hsl(210,8%,15%);
+    --title-color: hsl(210,8%,75%);
+    --text-color: hsl(210,8%,60%);
+    --article-background-color: #ecefba;
+    --article-text-color: #20211d;
+    --article-title-color: #323328;
+    --font-text: 'Pridi', serif;
+    --font-title: 'Quicksand', sans-serif;
+
+}
+
+/*********************************HTML*********************************/
+
 * {
     margin: 0;
     padding: 0;
@@ -9,7 +25,8 @@
 #flex-header {
     display: flex;
     justify-content: space-around;
-    background-color: black;
+    background-color: var(--theme-header-background-color);
+    box-shadow: 0px 1px 2px 2px grey;
 }
 
 .link {
@@ -18,12 +35,36 @@
     margin: 1rem;
     text-decoration: none;
     color: white;
-    padding: 1rem;
-    box-shadow: 6px 6px 2px 1px rgba(0, 0, 255, .2);
+    padding: 0.5rem;
+    font-family: var(--font-title);
+    font-size: 1.5rem;
 }
 
-/*********************************MAIN*********************************/
 
+/*********************************MAIN*********************************/
+#flex-article {
+    margin: 2rem;
+}
+
+.article-title {
+    font-family: var(--font-title);
+    color : var(--article-title-color);
+    font-size: 2rem;
+}
+
+.article-text {
+    font-family: var(--font-text);
+    color: var(--article-text-color);
+    font-size: 1.2rem;
+    padding-top: 1.5rem;
+}
+
+.article-place {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background-color: var(--article-background-color);
+}
 
 /*********************************FOOTER*********************************/
 
@@ -32,6 +73,7 @@
     flex-direction: column;
     width: 100%;
     height: auto;
+    background-color: var(--theme-footer-background-color);
 }
 
 .about-blog {
@@ -42,8 +84,86 @@
     display: flex;
     flex-direction: column;
     margin: 1rem;
+    font-family: var(--font-text);
 }
 
 .contact-blog {
+    margin: 1rem;
+}
+
+.footer-link {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.2rem;
+    font-family: var(--font-text);
+    font-size: 1.2rem;
+    container: fit-content;
+}
+
+.footer-title {
+    color: var(--title-color);
+    font-family: var(--font-title);
+    font-size: 1.4rem;
+}
+
+.footer-text {
+    color: var(--text-color);
+    font-family: var(--font-text);
+    font-size: 1.1rem;
+}
+
+
+/*********************************FORM*********************************/
+
+.inscription-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    /*background-image: url("_img/pacman-form.jpeg");*/
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#formReg {
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.button-form {
+    width: 50%;
+    margin-top: 1rem;
+}
+
+.space {
+ margin-top: 1rem;
+}
+
+.connexion-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    /*background-image: url("_img/tetris-form.jpeg");*/
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 1rem;
+}
+
+#formCon {
+    display: flex;
+    flex-direction: column;
+    background-image: url("_img/tetris-form.jpeg");
+    blur;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: cover;
+    border-radius: 15px;
+    padding: 1rem;
     margin: 1rem;
 }
