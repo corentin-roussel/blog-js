@@ -1,6 +1,40 @@
 //*********************** FUNCTIONS ***********************//
 
-const displayErrorsSignup = (dataJSON) => {
+const fetchForm = async (lequel) => {
+
+    const response = await fetch('back.php?' + lequel + '=1');
+    const form = await response.text();
+
+    return form;
+
+}
+
+const displayForm = (form) => {
+
+    divForm.innerHTML = "";
+    divForm.innerHTML = form;
+
+}
+
+const whenSubmit = async (form, lequel, e) => {
+
+    e.preventDefault();
+    const formData = new FormData(form);
+
+    const response = await fetch('back.php?' + lequel + '=1', { method: "POST", body: formData });
+    const dataJSON = await response.json();
+
+    if(lequel === 'signup') {
+        displayErrorsSignup(dataJSON);
+    }
+
+    if(lequel === 'signin') {
+        displayErrorsSignin(dataJSON);
+    }
+
+}
+
+const displayErrorsSignup = async(dataJSON) => {
 
     const errorLoginDiv = document.getElementById('errorLogin');
     errorLoginDiv.innerHTML = "";
@@ -58,42 +92,6 @@ const displayErrorsSignin = (dataJSON) => {
     }
 }
 
-const fetchForm = async (lequel) => {
-
-    const response = await fetch('back.php?' + lequel + '=1');
-    const form = await response.text();
-
-    console.log(form)
-
-    return form;
-
-}
-
-const displayForm = (form) => {
-
-    divForm.innerHTML = "";
-    divForm.innerHTML = form;
-
-}
-
-const whenSubmit = async(form, lequel, e) => {
-
-    e.preventDefault();
-    const formData = new FormData(form);
-
-    const response = await fetch('back.php?' + lequel + '=1', { method: "POST", body: formData });
-    const dataJSON = await response.json();
-
-    if(lequel === 'signup') {
-        displayErrorsSignup(dataJSON);
-    }
-
-    if(lequel === 'signin') {
-        displayErrorsSignin(dataJSON);
-    }
-
-}
-
 //********************* END FUNCTIONS *********************//
 
 
@@ -108,9 +106,7 @@ switchInscription.addEventListener('click', async() => {
 
     form = await fetchForm('inscription');
 
-    displayForm(form)
-
-    //main.removeChild(divButtons);
+    displayForm(form);
     
     const signupForm = document.getElementById('signupForm');
 
@@ -125,9 +121,7 @@ switchConnexion.addEventListener('click', async() => {
 
     form = await fetchForm('connexion');
 
-    displayForm(form)
-
-    //main.removeChild(divButtons);
+    displayForm(form);
         
     const signinForm = document.getElementById('signinForm');
     

@@ -1,0 +1,30 @@
+#main, .form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#main {
+    height: 80vh;
+}
+
+.form input, .form div {
+    margin: 1%;
+    width: 15vw;
+}
+
+#buttons button, #divForm button {
+    margin: 3%;
+}
+
+#buttons {
+    width: 15vw;
+    display: flex;
+    justify-content: center;
+}
+
+.error {
+    color: red;
+    font-size: small;
+}

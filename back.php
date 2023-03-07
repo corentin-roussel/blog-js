@@ -1,19 +1,16 @@
 <?php if(isset($_GET['inscription'])): ?>
 
-    <!-- <button name="login" id="switchConnexion">Login</button> -->
+    <form action="" method="POST" id="signupForm" class="form">
 
-    <form action="" method="POST" id="signupForm">
-
-        <input type="text" name="login" id="login" placeholder="Enter your login" required /><br>
+        <input type="text" name="login" id="login" placeholder="Enter your login" required />
         <div id="errorLogin" class="error"></div>
 
-        <input type="password" name="password" placeholder="Enter your password" required /><br>
+        <input type="password" name="password" placeholder="Enter your password" required />
 
-        <input type="password" name="passwordConfirm" placeholder="Confirm your password" required /><br>
+        <input type="password" name="passwordConfirm" placeholder="Confirm your password" required />
         <div id="errorPass" class="error"></div>
 
         <button type="submit" name="submit" id="signup">Singup</button>
-        <div id="okReg" class="success"></div>
 
     </form>
 
@@ -22,18 +19,15 @@
 
 <?php if(isset($_GET['connexion'])): ?>
 
-    <!-- <button name="signup" id="switchInscription">Signup</button> -->
+    <form action="" method="POST" id="signinForm" class="form">
 
-    <form action="" method="POST" id="signinForm">
-
-        <input type="text" name="login" id="login" placeholder="Enter your login" required /><br>
+        <input type="text" name="login" id="login" placeholder="Enter your login" required />
         <div id="errorLogin" class="error"></div>
 
-        <input type="password" name="password" placeholder="Enter your password" required /><br>
+        <input type="password" name="password" placeholder="Enter your password" required />
         <div id="errorPass" class="error"></div>
 
         <button type="submit" name="submit" id="signin">Singin</button>
-        <div id="okConn" class="success"></div>
 
     </form>
 
