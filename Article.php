@@ -152,7 +152,7 @@ class Article
 
     private function verifCategorie(?string $categorie) {
 
-        if($categorie != '--Categorie--') {
+        if(isset($categorie)) {
 
             return 'ok categorie';
 

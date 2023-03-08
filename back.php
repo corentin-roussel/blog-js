@@ -1,6 +1,7 @@
 <?php
     require_once 'User.php';
-if(session_status() == PHP_SESSION_NONE){ session_start();}
+    require_once 'Article.php';
+    if(session_status() == PHP_SESSION_NONE){ session_start();}
 ?>
 
 
