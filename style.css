@@ -126,7 +126,7 @@
     justify-content: center;
 }
 
-#formReg {
+#signupForm {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -170,7 +170,7 @@
     background-position: center;
 }
 
-#formCon {
+#signinForm {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -206,4 +206,28 @@
 
 .input {
     width: fit-content;
+}
+
+.error {
+    color: red;
+    font-size: small;
+}
+
+/*********************************AUTHENTICATE*********************************/
+
+#buttons {
+    display: flex;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+}
+
+#switchConnexion {
+    margin: 1rem;
+    padding: 0.5rem;
+}
+
+#switchInscription {
+    margin: 1rem;
+    padding: 0.5rem;
 }

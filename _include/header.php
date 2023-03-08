@@ -1,13 +1,13 @@
 <?php
-    if(isset($_SESSION)) {
+    if(isset($_SESSION['user'])) {
 ?>
-        <a class="link" href="profil.php">Profil</a>
+        <a class="link" href="profil.php">Profile</a>
         <a class="link" href="article.php">Article</a>
 <?php
     }else {
 ?>
-        <a class="link" href="index.php">Accueil</a>
-        <a class="link" href="authentification.php">S'authentifier</a>
+        <a class="link" href="index.php">Home</a>
+        <a class="link" href="authentification.php">Authenticate</a>
 
 <?php
     }

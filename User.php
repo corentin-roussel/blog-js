@@ -1,6 +1,5 @@
 <?php
 
-if (session_status() == PHP_SESSION_NONE){ session_start();}
 
 class User
 {
@@ -104,10 +103,10 @@ class User
 
             if(password_verify($password,$dataPass)){
 
-                $_SESSION['id'] = $id;
-                $_SESSION['login'] = $login;
-                $_SESSION['password'] = $dataPass;
-                $_SESSION['id_roles'] = $id_roles;
+                $_SESSION['user'] = array("id" => $id, "login" => $login, "password" => $dataPass, "id_roles" => $id_roles);
+//                $_SESSION['login'] = $login;
+//                $_SESSION['password'] = $dataPass;
+//                $_SESSION['id_roles'] = $id_roles;
 
                 $messages['okConn'] = 'You\'re connected';
 
@@ -198,7 +197,7 @@ class User
 
     }
 
-    public function Disconnect() {
+    public static function Disconnect() {
 
         session_destroy();
         exit('Vous avez bien été deconnecté');
