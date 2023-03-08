@@ -100,6 +100,10 @@
     container: fit-content;
 }
 
+.footer-link:hover {
+    color: white;
+}
+
 .footer-title {
     color: var(--title-color);
     font-family: var(--font-title);
@@ -120,23 +124,36 @@
     height: auto;
     display: flex;
     justify-content: center;
-    /*background-image: url("_img/pacman-form.jpeg");*/
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
 }
 
 #formReg {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    backdrop-filter: blur(10px);
+    background-image: url("_img/pacman-form.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     padding: 1rem;
     margin: 1rem;
 }
 
 .button-form {
-    width: 50%;
+    width: fit-content;
     margin-top: 1rem;
+    padding: 0.5rem;
+    background-color: grey;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 15px;
+    font-family: var(--font-text);
+    font-size: 1.2rem;
+}
+
+
+.button-form:active {
+    transform: translateY(4px);
 }
 
 .space {
@@ -148,22 +165,45 @@
     height: auto;
     display: flex;
     justify-content: center;
-    /*background-image: url("_img/tetris-form.jpeg");*/
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    margin: 1rem;
 }
 
 #formCon {
+    width: 100%;
     display: flex;
     flex-direction: column;
     background-image: url("_img/tetris-form.jpeg");
-    blur;
     background-repeat: no-repeat;
     background-position: center bottom;
     background-size: cover;
-    border-radius: 15px;
     padding: 1rem;
     margin: 1rem;
+}
+
+.register-title {
+    font-family: var(--font-title);
+    color: var(--article-background-color);
+    font-size: 2rem;
+}
+
+.register-text {
+    font-family: var(--font-text);
+    color: var(--article-background-color);
+    font-size: 1.5rem;
+}
+
+.conn-title {
+    font-family: var(--font-title);
+    font-size: 2rem;
+}
+
+.conn-text {
+    font-family: var(--font-text);
+    font-size: 1.5rem;
+}
+
+.input {
+    width: fit-content;
 }

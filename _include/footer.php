@@ -2,10 +2,11 @@
 ?>
 
 <section class="about-blog">
-    <h3 class="footer-title">A propos de nous</h3>
+    <h3 class="footer-title">A propos du blog</h3>
     <p class="footer-text">C'est un pargraphe de test</p>
 </section>
 <section class="link-blog">
+    <h3 class="footer-title">Liens</h3>
     <?php
         if(isset($_SESSION)) {
     ?>
@@ -23,5 +24,6 @@
 </section>
 <section class="contact-blog">
     <h3 class="footer-title">Nous contacter</h3>
-    <p class="footer-text">Télephone: 06-06-06-06-00</p>
+    <p class="footer-text">E-mail: gameblog@gmail.com</p>
+
 </section>
