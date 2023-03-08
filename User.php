@@ -44,10 +44,11 @@ class User
                 
             $hash = password_hash($password, PASSWORD_DEFAULT);
                 
-            $sql = "INSERT INTO `utilisateurs` (`login`, `password`) VALUES (:login, :pass)";
+            $sql = "INSERT INTO `utilisateurs` (`login`, `password`, `id_roles`) VALUES (:login, :pass, :id_roles)";
             $req = $this->conn->prepare($sql);
             $req->execute(array(':login' => $login,
-                                ':pass' => $hash
+                                ':pass' => $hash,
+                                ':id_roles' => 1
             ));
 
             $messages['okReg'] = 'Your account is now created and you can login';
@@ -99,12 +100,14 @@ class User
             $tab = $req->fetch(PDO::FETCH_ASSOC);
             $dataPass = $tab['password'];
             $id = $tab['id'];
+            $id_roles = $tab['id_roles'];
 
             if(password_verify($password,$dataPass)){
 
                 $_SESSION['id'] = $id;
                 $_SESSION['login'] = $login;
                 $_SESSION['password'] = $dataPass;
+                $_SESSION['id_roles'] = $id_roles;
 
                 $messages['okConn'] = 'You\'re connected';
 
