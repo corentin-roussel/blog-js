@@ -110,6 +110,8 @@ class Article
                                 ':id_categorie' => $this->id_categorie
             ));
 
+            echo 'your article is edited';
+
         }
 
         $json = json_encode($messages, JSON_PRETTY_PRINT);
@@ -122,7 +124,7 @@ class Article
 
     private function verifTitre(?string $title) {
 
-        if(isset($titre)) {
+        if(isset($title)) {
 
             if(strlen($title) > 5) {
 
@@ -138,11 +140,11 @@ class Article
 
         if(isset($content)) {
 
-            if(strlen($content) > 50) {
+            if(strlen($content) > 100) {
 
                 return 'ok contenu';
 
-            }else{ return 'Your article is too short. it must be over 50 cheracters long'; }
+            }else{ return 'Your article is too short. it must be over 100 cheracters long'; }
 
         }else{ return 'You have to add content to your article'; }
 
@@ -213,7 +215,5 @@ class Article
     }
 
 }
-
-$article = new Article();
 
 ?>
