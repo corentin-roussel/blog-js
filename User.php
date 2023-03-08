@@ -5,7 +5,7 @@ class User
 {
     private ?int $id;
     public ?string $login;
-    private $conn;
+    private ?PDO $conn;
 
     public function __construct() {
 
@@ -81,6 +81,7 @@ class User
 
         $json = json_encode($messages, JSON_PRETTY_PRINT);
         echo $json;
+
 
     }
 
@@ -182,7 +183,7 @@ class User
 
             }elseif (!empty($passwordNew) && empty($passwordNewConfirm)){
     
-                $$messges['errorPassConfirm'] = 'Please confirm password';
+                $messages['errorPassConfirm'] = 'Please confirm password';
     
             }elseif(($passwordNew != $passwordNewConfirm)) {
 

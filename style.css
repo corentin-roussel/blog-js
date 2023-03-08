@@ -22,7 +22,7 @@
 
 /*********************************HEADER*********************************/
 
-#flex-header {
+.flex-header {
     display: flex;
     justify-content: space-around;
     background-color: var(--theme-header-background-color);
@@ -68,7 +68,7 @@
 
 /*********************************FOOTER*********************************/
 
-#flex-footer {
+.flex-footer {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -230,4 +230,10 @@
 #switchInscription {
     margin: 1rem;
     padding: 0.5rem;
+}
+
+/*********************************PROFILE*********************************/
+
+.profile-container {
+
 }

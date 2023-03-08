@@ -29,7 +29,7 @@
 
     </main>
     <footer>
-        <article id="flex-footer">
+        <article class="flex-footer">
             <?php require_once '_include/footer.php' ?>
         </article>
     </footer>
