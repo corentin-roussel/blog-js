@@ -5,7 +5,7 @@ class User
 {
     private ?int $id;
     public ?string $login;
-    private ?PDO $conn;
+    public ?PDO $conn;
 
     public function __construct() {
 
@@ -271,10 +271,15 @@ class User
 
     public function getLastArticles() {
 
-        $req = $this->conn->prepare("SELECT * FROM articles ORDER BY id DESC LIMIT 5");
+        $req = $this->conn->query("SELECT * FROM articles INNER JOIN utilisateurs ON articles.id_utilisateur = utilisateurs.id ORDER BY id DESC LIMIT 5");
         $article = $req->fetchAll(PDO::FETCH_ASSOC);
 
-        return $article;
+
+        foreach($article as $key => $values) {
+            var_dump($values);
+        }
+
+
     }
 
 }

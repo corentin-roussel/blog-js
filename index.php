@@ -4,12 +4,6 @@
 
     $user = new User();
 
-    $display = $user->getLastArticles();
-
-    foreach($display as $key => $values) {
-        var_dump($key);
-        var_dump($values);
-    }
 
 ?>
 
@@ -25,6 +19,7 @@
     </header>
     <main>
         <article id="flex-article">
+            <?php  $user->getLastArticles(); ?>
             <h1>Derniers articles.</h1>
             <section class="article-place">
                 <h2 class="article-title">Diablo 4 ça donne quoi ?</h2>
