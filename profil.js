@@ -13,8 +13,10 @@ const submitProfile = async (form) => {
 
 const displayErrorProfile = (dataJSON) => {
     const errorLogin = document.querySelector("#errorLoginProfile");
+    errorLogin.innerHTML = "";
 
     const errorPassword = document.querySelector("#errorPassProfile");
+    errorPassword.innerHTML = "";
 
     if(dataJSON["errorLoginExist"]) {
         const errorLoginExist = document.createElement("p");

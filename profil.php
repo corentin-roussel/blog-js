@@ -19,37 +19,33 @@ if(isset($_GET['profile'])) {
 </head>
 <body>
     <header>
-        <div class="flex-header">
             <?php require_once('_include/header.php') ?>
-        </div>
     </header>
     <main>
         <div class="profile-container">
             <form action="#" method="POST" id="formProfile">
-                <h2>Profile</h2>
+                <h2 class="title-profile">Profile</h2>
 
-                <label for="login">Login</label>
-                <input type="text" name="login" id="login">
+                <label class="space text-profile" for="login">Login</label>
+                <input class="input" type="text" name="login" id="login" value="<?php if(isset($_SESSION['user'])) { echo $_SESSION['user']['login'];} ?>">
                 <div id="errorLoginProfile" class="error"></div>
 
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password">
+                <label class="space text-profile" for="password">Password</label>
+                <input class="input" type="password" name="password" id="password">
 
-                <label for="newPassword">New password</label>
-                <input type="password" name="newPassword" id="newPassword">
+                <label class="space text-profile" for="newPassword">New password</label>
+                <input class="input" type="password" name="newPassword" id="newPassword">
 
-                <label for="newPasswordConfirm">New password confirm</label>
-                <input type="password" name="newPasswordConfirm" id="newPasswordConfirm">
+                <label class="space text-profile" for="newPasswordConfirm">New password confirm</label>
+                <input class="input" type="password" name="newPasswordConfirm" id="newPasswordConfirm">
                 <div id="errorPassProfile" class="error"></div>
 
-                <input type="submit" value="Update" name="submit" id="submitProfile">
+                <input class="button-form" type="submit" value="Update" name="submit" id="submitProfile">
             </form>
         </div>
     </main>
     <footer>
-        <div class="flex-footer">
             <?php require_once('_include/footer.php') ?>
-        </div>
     </footer>
 </body>
 </html>
