@@ -5,7 +5,7 @@ class User
 {
     private ?int $id;
     public ?string $login;
-    private $conn;
+    private ?PDO $conn;
 
     public function __construct() {
 
@@ -82,6 +82,7 @@ class User
         $json = json_encode($messages, JSON_PRETTY_PRINT);
         echo $json;
 
+
     }
 
     public function Connect($login, $password) {
@@ -127,27 +128,35 @@ class User
 
         $messages = [];
 
-        $sessionId = $_SESSION['id'];
-        $passwordTrue = $_SESSION['password'];
+        $sessionId = $_SESSION['user']['id'];
+        $passwordTrue = $_SESSION['user']['password'];
 
         $sql = "SELECT * FROM utilisateurs WHERE id = :sessionId";
         $req = $this->conn->prepare($sql);
         $req->execute(array(':sessionId' => $sessionId));
 
+
+
+
         if(password_verify($password,$passwordTrue)){
 
-            if ($_SESSION['login'] != $login && strlen($login) >= 4 && !preg_match("[\W]", $login)){
+            if ($_SESSION['user']['login'] != $login && strlen($login) >= 4 && !preg_match("[\W]", $login)){
 
-                $row = $req->rowCount();
+                $update = $this->conn->prepare("SELECT * from utilisateurs WHERE login = :login");
+                $update->execute([
+                    ":login" => $login
+                ]);
 
-                if($row <= 0){
+                $verif = $update->rowCount();
+
+                if($verif === 0){
 
                     $sqlLog = "UPDATE utilisateurs SET login = :login WHERE id = :sessionId";
             
                     $req = $this->conn->prepare($sqlLog);
                     $req->execute(array(':login' => $login, ':sessionId' => $sessionId));
                     
-                    $_SESSION['login'] = $login;
+                    $_SESSION['user']['login'] = $login;
 
                     $messages['okLoginEdit'] = 'Your login has been edited';
 
@@ -172,7 +181,7 @@ class User
                 $sqlPass = "UPDATE utilisateurs SET password = '$hash' WHERE id = '$sessionId'";
                 $rs = $this->conn->query($sqlPass);
 
-                $_SESSION['password'] = $hash;
+                $_SESSION['user']['password'] = $hash;
             
                 $messages['okPassEdit'] = 'Your password has been edited';
 
@@ -182,7 +191,7 @@ class User
 
             }elseif (!empty($passwordNew) && empty($passwordNewConfirm)){
     
-                $$messges['errorPassConfirm'] = 'Please confirm password';
+                $messages['errorPassConfirm'] = 'Please confirm password';
     
             }elseif(($passwordNew != $passwordNewConfirm)) {
 
@@ -194,7 +203,7 @@ class User
 
         $json = json_encode($messages, JSON_PRETTY_PRINT);
         echo $json;
-
+        die();
     }
 
     public static function Disconnect() {
@@ -211,7 +220,7 @@ class User
         if($_SESSION){
 
             // Set variables to use in the following request.
-            $sessionId = $_SESSION['id'];
+            $sessionId = $_SESSION['user']['id'];
 
             $sql = "DELETE FROM `utilisateurs` WHERE id = :sessionId";
         
@@ -253,7 +262,7 @@ class User
     public function GetLogin() {
 
         if($_SESSION){
-            return $_SESSION['login'];
+            return $_SESSION['user']['login'];
         }else{
             echo 'Please login to view your login';
         }

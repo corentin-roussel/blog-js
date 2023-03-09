@@ -1,3 +1,4 @@
+<div class="flex-header">
 <?php
     if(isset($_SESSION['user'])) {
 ?>
@@ -12,3 +13,4 @@
 <?php
     }
 ?>
+</div>
