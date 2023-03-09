@@ -16,32 +16,58 @@
 
     <main>
 
-        <form action="" method="POST" id="creaArticleForm">
+        <div class="creation-container">
 
-            <h2 class="creation-title">Create an article</h2>
+            <form action="" method="POST" id="creaArticleForm">
 
-            <label for="titre">Titre</label>
-            <input class="input" type="text" name="titre" id="titre" required />
-            <div id="errorTitre" class="error"></div>
+                <h2 class="title-creation">Create an article</h2>
 
-            <label for="content">Content</label>
-            <textarea class="input" name="content" id="content" required></textarea>
-            <div id="errorContent" class="error"></div>
+                <label for="titre" class="space text-creation">Titre</label>
+                <input class="input" type="text" name="titre" id="titre" required />
+                <div id="errorTitre" class="error"></div>
 
-            <label for="categorie">Choose a category :</label>               <!-- Rajouter les catégories -->
-            <select name="categorie" id="categorie">
-                <option value="">--Category--</option>
-                <option value="test">test</option>
-                <option value="Categorie1">Categorie1</option>
-                <option value="Categorie2">Categorie2</option>
-                <option value="Categorie3">Categorie3</option>
-                <option value="Categorie4">Categorie4</option>
-            </select>
-            <div id="errorCategorie" class="error"></div>
+                <label for="content" class="space text-creation">Content</label>
+                <textarea class="input" name="content" id="content" required></textarea>
+                <div id="errorContent" class="error"></div>
 
-            <button class="button-form" type="submit" name="submit" id="publish">Publish article</button>
+                <label for="categorie" class="space text-creation">Choose a category :</label>                          <!-- Rajouter les catégories -->
+                <select name="categorie" id="categorie">        <!-- avec une boucle php? -->
+                    <option value="" class="selestCategorie">--Category--</option>
 
-        </form>
+                    <?php
+                        $db_username = 'root';
+                        $db_password = '';
+
+                        try{
+                            $conn = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', $db_username, $db_password);
+                            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        }
+                        catch(PDOException $e){
+                            echo "Error : " . $e->getMessage();
+                        }
+
+                        $sql = "SELECT nom FROM categories";
+                        $req = $conn->prepare($sql);
+                        $req->execute();
+                        $noms = $req->fetchAll(PDO::FETCH_CLASS);
+                    
+                        for ($i=0; isset($noms[$i]); $i++) { 
+                            foreach ($noms[$i] as $value) {
+                    
+                                echo '<option value="' . $value . '">' . $value . '</option>';
+                    
+                            }
+                        }
+                    ?>
+
+                </select>
+                <div id="errorCategorie" class="error"></div>
+
+                <button class="button-form" type="submit" name="submit" id="publish">Publish article</button>
+
+            </form>
+
+        </div>
 
     </main>
 
