@@ -1,3 +1,4 @@
+<?php if (session_status() == PHP_SESSION_NONE){ session_start();} ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +8,7 @@
 </head>
 <body>
 
-    <?php if (session_status() == PHP_SESSION_NONE){ session_start();} ?>
+
     <?php require_once 'Article.php' ?>
 
     <header>
