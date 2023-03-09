@@ -3,7 +3,7 @@
     if(isset($_SESSION['user'])) {
 ?>
         <a class="link" href="profil.php">Profile</a>
-        <a class="link" href="article.php">Article</a>
+        <a class="link" href="creation-article.php">Article</a>
 <?php
     }else {
 ?>
