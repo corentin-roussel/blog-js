@@ -34,7 +34,7 @@ const whenSubmit = async (form, lequel, e) => {
 
 }
 
-const displayErrorsSignup = async(dataJSON) => {
+const displayErrorsSignup = (dataJSON) => {
 
     const errorLoginDiv = document.getElementById('errorLogin');
     errorLoginDiv.innerHTML = "";

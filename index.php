@@ -10,9 +10,7 @@
 </head>
 <body>
     <header>
-        <article id="flex-header">
-            <?php require_once('_include/header.php') ?>
-        </article>
+        <?php require_once('_include/header.php') ?>
     </header>
     <main>
         <article id="flex-article">
@@ -35,9 +33,7 @@
         </article>
     </main>
     <footer>
-        <article id="flex-footer">
-            <?php  require_once('_include/footer.php')  ?>
-        </article>
+        <?php  require_once('_include/footer.php')  ?>
     </footer>
 </body>
 </html>
