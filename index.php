@@ -1,5 +1,16 @@
 <?php
+    require_once('User.php');
     if(session_status() == PHP_SESSION_NONE){ session_start();}
+
+    $user = new User();
+
+    $display = $user->getLastArticles();
+
+    foreach($display as $key => $values) {
+        var_dump($key);
+        var_dump($values);
+    }
+
 ?>
 
 <!doctype html>

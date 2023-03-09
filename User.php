@@ -269,6 +269,14 @@ class User
 
     }
 
+    public function getLastArticles() {
+
+        $req = $this->conn->prepare("SELECT * FROM articles ORDER BY id DESC LIMIT 5");
+        $article = $req->fetchAll(PDO::FETCH_ASSOC);
+
+        return $article;
+    }
+
 }
 
 ?>
