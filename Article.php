@@ -85,6 +85,8 @@ class Article
             $req->execute(array(':nomCategorie' => $categorie));
             $tab = $req->fetch(PDO::FETCH_ASSOC);
 
+            var_dump($tab);
+
             $categorieId = $tab['id'];
 
             $this->setCategorieId($categorieId);
@@ -140,11 +142,11 @@ class Article
 
         if(isset($content)) {
 
-            if(strlen($content) > 100) {
+            if(strlen($content) > 80) {
 
                 return 'ok contenu';
 
-            }else{ return 'Your article is too short. it must be over 100 cheracters long'; }
+            }else{ return 'Your article is too short. it must be over 80 cheracters long'; }
 
         }else{ return 'You have to add content to your article'; }
 
@@ -152,7 +154,7 @@ class Article
 
     private function verifCategorie(?string $categorie) {
 
-        if(isset($categorie)) {
+        if(!empty($categorie)) {
 
             return 'ok categorie';
 

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <?php require_once '_include/head.php' ?>
+    <script src="creation-article.js" defer></script>
     <title>Document</title>
 </head>
 <body>
@@ -30,15 +31,16 @@
             <label for="categorie">Choose a category :</label>               <!-- Rajouter les catégories -->
             <select name="categorie" id="categorie">
                 <option value="">--Category--</option>
+                <option value="test">test</option>
                 <option value="Categorie1">Categorie1</option>
                 <option value="Categorie2">Categorie2</option>
                 <option value="Categorie3">Categorie3</option>
                 <option value="Categorie4">Categorie4</option>
             </select>
             <div id="errorCategorie" class="error"></div>
+            <div id="success"></div>
 
             <button class="button-form" type="submit" name="submit" id="publish">Publish article</button>
-            <div id="success" class="success"></div>
 
         </form>
 
