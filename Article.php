@@ -110,7 +110,7 @@ class Article
                                 ':id_categorie' => $this->id_categorie
             ));
 
-            echo 'your article is edited';
+            $messages['success'] = 'your article is edited';
 
         }
 

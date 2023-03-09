@@ -64,3 +64,16 @@ if(isset($_GET['signin'])) {
 }
 
 ?>
+
+
+<?php
+
+$article = new Article();
+
+if(isset($_GET['create'])) {
+
+    $article->checkArticle($_POST['content'], $_POST['titre'], $_POST['categorie']);
+
+}
+
+?>

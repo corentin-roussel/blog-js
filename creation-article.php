@@ -21,10 +21,11 @@
 
             <label for="titre">Titre</label>
             <input class="input" type="text" name="titre" id="titre" required />
-            <div id="errorLogin" class="error"></div>
+            <div id="errorTitre" class="error"></div>
 
             <label for="content">Content</label>
-            <input class="input" type="textarea" name="content" required />
+            <textarea class="input" name="content" required></textarea>
+            <div id="errorContent" class="error"></div>
 
             <label for="categorie">Choose a category :</label>               <!-- Rajouter les catégories -->
             <select name="categorie" id="categorie">
@@ -34,9 +35,11 @@
                 <option value="Categorie3">Categorie3</option>
                 <option value="Categorie4">Categorie4</option>
             </select>
-            <div id="errorPass" class="error"></div>
+            <div id="errorCategorie" class="error"></div>
 
             <button class="button-form" type="submit" name="submit" id="publish">Publish article</button>
+            <div id="success" class="success"></div>
+
         </form>
 
     </main>
