@@ -267,3 +267,50 @@
     color: #000000;
     font-size: 2rem;
 }
+
+
+
+/*********************************CREATE ARTICLE*********************************/
+
+
+.creation-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#creaArticleForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-image: url("_img/image-jeux-video.jpg");
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: cover;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.text-creation {
+    font-family: var(--font-text);
+    color: #a4bcff;
+    font-size: 1.5rem;
+}
+
+.title-creation {
+    font-family: var(--font-title);
+    color: #6369ff;
+    font-size: 2rem;
+}
+
+#content {
+    min-height: 21vh;
+}
+
+#titre, #content, #categorie {
+    width: 80vw;
+}

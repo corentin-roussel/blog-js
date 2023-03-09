@@ -1,6 +1,7 @@
 <?php
     require_once 'User.php';
-if(session_status() == PHP_SESSION_NONE){ session_start();}
+    require_once 'Article.php';
+    if(session_status() == PHP_SESSION_NONE){ session_start();}
 ?>
 
 
@@ -59,6 +60,19 @@ if(isset($_GET['signup'])) {
 if(isset($_GET['signin'])) {
 
     $user->Connect($_POST['login'], $_POST['password']);
+
+}
+
+?>
+
+
+<?php
+
+$article = new Article();
+
+if(isset($_GET['create'])) {
+
+    $article->checkArticle($_POST['content'], $_POST['titre'], $_POST['categorie']);
 
 }
 
