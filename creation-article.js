@@ -1,4 +1,4 @@
-const whenSubmit = async(e) => {
+const whenSubmit = async(e, formCreation) => {
 
     e.preventDefault();
 
@@ -11,7 +11,12 @@ const whenSubmit = async(e) => {
 
 }
 
-const displayErrors = async(dataJSON) => {
+const displayErrors = (dataJSON) => {
+
+    const inputTitle = document.getElementById('titre');
+    const inputContent = document.getElementById('content');
+    const inputCategorie = document.getElementById('categorie');
+
 
     const errorTitleDiv = document.getElementById('errorTitre');
     errorTitleDiv.innerHTML = "";
@@ -22,28 +27,25 @@ const displayErrors = async(dataJSON) => {
     const errorCategorieDiv = document.getElementById('errorCategorie');
     errorCategorieDiv.innerHTML = "";
 
-    const successDiv = document.getElementById('success');
-    successDiv.innerHTML = "";
-
     if(dataJSON['errorTitre']) {
         const paraErrorTitle = document.createElement("p");
         paraErrorTitle.textContent = dataJSON['errorTitre'];
         errorTitleDiv.appendChild(paraErrorTitle);
     }
-
     if(dataJSON['errorContent']) {
         const paraErrorContent = document.createElement("p");
         paraErrorContent.textContent = dataJSON['errorContent'];
         errorContentDiv.appendChild(paraErrorContent);
     }
-
     if(dataJSON['errorCategorie']) {
         const paraErrorCategorie = document.createElement("p");
         paraErrorCategorie.textContent = dataJSON['errorCategorie'];
         errorCategorieDiv.appendChild(paraErrorCategorie);
     }
-
     if(dataJSON['success']) {
+        inputTitle.value = "";
+        inputContent.value = "";
+        inputCategorie.value = "";
         alert(dataJSON['success']);
     }
 }
@@ -54,6 +56,6 @@ const formCreation = document.getElementById('creaArticleForm');
 
 formCreation.addEventListener('submit', async(e) => {
 
-    whenSubmit(e);
+    whenSubmit(e, formCreation);
 
 })

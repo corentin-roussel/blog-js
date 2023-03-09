@@ -25,7 +25,7 @@
             <div id="errorTitre" class="error"></div>
 
             <label for="content">Content</label>
-            <textarea class="input" name="content" required></textarea>
+            <textarea class="input" name="content" id="content" required></textarea>
             <div id="errorContent" class="error"></div>
 
             <label for="categorie">Choose a category :</label>               <!-- Rajouter les catégories -->
@@ -38,7 +38,6 @@
                 <option value="Categorie4">Categorie4</option>
             </select>
             <div id="errorCategorie" class="error"></div>
-            <div id="success"></div>
 
             <button class="button-form" type="submit" name="submit" id="publish">Publish article</button>
 

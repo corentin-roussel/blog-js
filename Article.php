@@ -85,8 +85,6 @@ class Article
             $req->execute(array(':nomCategorie' => $categorie));
             $tab = $req->fetch(PDO::FETCH_ASSOC);
 
-            var_dump($tab);
-
             $categorieId = $tab['id'];
 
             $this->setCategorieId($categorieId);
