@@ -47,16 +47,6 @@
 <?php die(); endif ?>
 
 
-
-<?php
-
-
-
-?>
-
-
-
-
 <?php
 
 $user = new User();
@@ -83,6 +73,26 @@ $article = new Article();
 if(isset($_GET['create'])) {
 
     $article->checkArticle($_POST['content'], $_POST['titre'], $_POST['categorie']);
+
+}
+
+if(isset($_GET['displayArt'])){
+
+    if(isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
+
+        $article->getArticlesListe($_POST['nbArticles'], $numPage, $_POST['listeCategorie']);
+
+    }elseif (isset($_POST['nbArticles']) && !isset($_POST['listeCategorie'])) {
+
+        $article->getArticlesListe($_POST['nbArticles'], $numPage, "");
+
+    }elseif (!isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
+
+        $article->getArticlesListe(5, $numPage, $_POST['listeCategorie']);
+
+    }else{
+        $article->getArticlesListe(5, $numPage, "");
+    }
 
 }
 

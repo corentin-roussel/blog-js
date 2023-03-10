@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <?php require_once '_include/head.php' ?>
-    <script src="creation-article.js" defer></script>
+    <script src="articles-page.js" defer></script>
     <title>Document</title>
 </head>
 <body>
@@ -68,54 +68,18 @@
         <div id="displayListe">
 
             <?php
-
-                $sql2 = "SELECT * FROM articles ORDER BY date_creation";
-                $req2 = $conn->prepare($sql2);
-                $req2->execute();
-                $tab2 = $req2->fetchAll(PDO::FETCH_CLASS);
-
-                if($_GET['pagination']) {
-
-                    for ($j=0; $j < 5 * $_GET['pagination']; $j++) {
-                        
-                        foreach ($tab2[$j] as $key => $value) {
-                            
-                            echo $key . ' ' . $value . '<br>';
-
-                        }
-
-                        echo '<br>';
-
-                    }
-
+                if(!isset($_GET['pagination'])) {
+                    $numPage = 1;
+                }else{
+                    $numPage = $_GET['pagination'];
                 }
-
             ?>
 
-        </div>
-
-        <div id="pagination">
-
-            <?php
-
-                $row2 = $req2->rowCount();
-                $nbPaginition = (int) $row2 / 5;
-
-                if($row2 % 5 > 0) {
-
-                    $nbPaginition = (int) $nbPaginition + 1;
-
-                }
-
-                for ($i=1; $i < $nbPaginition + 1; $i++) {
-
-                    echo '<a href="articles-page.php?pagination=' . $i . '">' . $i . '</a>';
-
-                }
-
-             ?>
+            <article id="flex-article"></article>
 
         </div>
+
+        <div id="pagination"></div>
 
     </main>
 
