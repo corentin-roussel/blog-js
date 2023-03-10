@@ -166,7 +166,6 @@ class Article
 
         $row = $req->rowCount();
         $nbPaginition = (int) $row / $artParPage;
-        var_dump($row);
 
         if($row % $artParPage > 0) {
 
@@ -176,7 +175,7 @@ class Article
 
         for ($i=1; $i <= $nbPaginition; $i++) {
 
-            echo '<a href="articles-page.php?pagination=' . $i . '">' . $i . '   </a>';
+            echo '<a href="articles-page.php?pagination=' . $i . '" class="paginationNum">' . $i . '   </a>';
 
         }
     }

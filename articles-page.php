@@ -51,7 +51,7 @@
                     
                 </select>
 
-                <label for="categorie" class="space text-liste">Articles per page :</label>
+                <label for="nbArticles" class="space text-liste">Articles per page :</label>
                 <select name="nbArticles" id="nbArticles">
                     <option value="5" class="nbArticles">5</option>
                     <option value="10" class="nbArticles">10</option>

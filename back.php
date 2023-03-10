@@ -76,7 +76,11 @@ if(isset($_GET['create'])) {
 
 }
 
-if(isset($_GET['displayArt'])){
+if(isset($_GET['displayArt'])) {
+
+    if(isset($_GET['numPage'])) {
+        $numPage = $_GET['numPage'];
+    }
 
     if(isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
 
@@ -92,6 +96,28 @@ if(isset($_GET['displayArt'])){
 
     }else{
         $article->getArticlesListe(5, $numPage, "");
+    }
+
+}
+
+if(isset($_GET['displayPagination'])) {
+
+    if(isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
+
+        $article->pagination($_POST['nbArticles'], $_POST['listeCategorie']);
+
+    }elseif (!isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
+        
+        $article->pagination(5, $_POST['listeCategorie']);
+
+    }elseif (isset($_POST['nbArticles']) && !isset($_POST['listeCategorie'])) {
+        
+        $article->pagination($_POST['nbArticles'], "");
+
+    }else{
+
+        $article->pagination(5, "");
+
     }
 
 }
