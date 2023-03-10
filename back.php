@@ -46,8 +46,18 @@
 </div>
 <?php die(); endif ?>
 
+
+
 <?php
 
+
+
+?>
+
+
+
+
+<?php
 
 $user = new User();
 
