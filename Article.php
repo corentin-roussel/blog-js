@@ -44,6 +44,7 @@ class Article
         $okTitre = $okContent = $okCategorie = false;
         $dateCrea = date('Y-m-d H:i:s');
         $this->setDateCrea($dateCrea);
+        $this->setDateModif($dateCrea);
         $this->setIdUser($_SESSION['user']['id']);
 
         $checkTitre = $this->verifTitre($titre);
@@ -101,12 +102,13 @@ class Article
 
         if($okTitre === true && $okContent === true && $okCategorie === true) {
 
-            $sql = "INSERT INTO articles (id_utilisateur, contenu, titre, date_creation, id_categorie) VALUES (:id_utilisateur, :contenu, :titre, :date_creation, :id_categorie)";
+            $sql = "INSERT INTO articles (id_utilisateur, contenu, titre, date_creation, date_modification, id_categorie) VALUES (:id_utilisateur, :contenu, :titre, :date_creation, :date_modification, :id_categorie)";
             $req = $this->conn->prepare($sql);
             $req->execute(array(':id_utilisateur' => $this->id_utilisateur,
                                 ':contenu' => $this->contenu,
                                 ':titre' => $this->titre,
                                 ':date_creation' => $this->date_creation,
+                                ':date_modification' => $this->date_modification,
                                 ':id_categorie' => $this->id_categorie
             ));
 
