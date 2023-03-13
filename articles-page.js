@@ -18,9 +18,6 @@ const firstDoPagination = async() => {
 
     prepClickPagination();
 
-    
-    console.log(numPage);
-
 }
 
 const whenFilterArticles = async(e, form, numPage) => {
@@ -65,12 +62,12 @@ const prepClickPagination = async() => {
             e.preventDefault();
             numPage = num.innerText;
 
-            // displayArticlesDiv.innerHTML = "";
+            displayArticlesDiv.innerHTML = "";
         
-            // const response = await fetch('back.php?displayArt=1&numPage=' + numPage, {method: "POST", body: formData});
-            // const listeArt = await response.text();
+            const response = await fetch('back.php?displayArt=1&numPage=' + numPage);
+            const listeArt = await response.text();
         
-            // displayArticlesDiv.innerHTML = listeArt;
+            displayArticlesDiv.innerHTML = listeArt;
 
         })
     }
