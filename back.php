@@ -56,9 +56,30 @@
 
 
 
-<?php if(isset($_GET['utilisateurs'])): ?>
+<?php if(isset($_GET['utilisateurs'])) {
 
-<?php die(); endif ?>
+    $db_username = 'root';
+    $db_password = '';
+
+    try{
+        $conn = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', $db_username, $db_password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+    catch(PDOException $e){
+        echo "Error : " . $e->getMessage();
+    }
+
+    $sql1 = ("SELECT *,utilisateurs.id FROM utilisateurs INNER JOIN roles ON utilisateurs.id_roles = roles.id");
+    $req1 = $conn->prepare($sql1);
+    $req1->execute();
+    $tabUser = $req1->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($tabUser as $value) {
+        var_dump($value);
+    }
+
+}
+?>
 
 
 
