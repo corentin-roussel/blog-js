@@ -47,13 +47,17 @@ class Comment
         $this->setDateCrea($dateCrea);
         $this->setDateModif($dateCrea);
         $this->setIdUser($_SESSION['user']['id']);
+        if(isset($_GET['article']))
+        {
+            $this->setIdArticle($_GET['article']);
+        };
 
 
-        $req = $this->conn->prepare("SELECT articles.id FROM articles WHERE articles.id = :id");
-        $req->execute([
-            ":id" => $_GET['article']
-        ]);
-        $get_article = $req->fetch(PDO::FETCH_ASSOC);
+//        $req = $this->conn->prepare("SELECT articles.id FROM articles WHERE articles.id = :id");
+//        $req->execute([
+//            ":id" => $_GET['article']
+//        ]);
+//        $get_article = $req->fetch(PDO::FETCH_ASSOC);
 
 
 
@@ -88,7 +92,10 @@ class Comment
 
         $json = json_encode($messages, JSON_PRETTY_PRINT);
         echo $json;
+
+        die();
     }
+
 
     //*************** VERIFICATION ***************//
 
@@ -115,7 +122,7 @@ class Comment
     }
 
 
-    public function setIdUtilisateur(?int $id_utilisateur): void
+    public function setIdUser(?int $id_utilisateur): void
     {
         $this->id_utilisateur = $id_utilisateur;
     }

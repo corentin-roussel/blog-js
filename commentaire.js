@@ -1,6 +1,9 @@
 let comment_place = document.querySelector("#place")
 let comment_form = document.querySelector("#formComm")
-let comm_error = document.querySelector("#errorComm")
+let comment = document.querySelector("#comment");
+
+
+
 
 const fetchFormComm = async () => {
     const response = await fetch("commentaire.php")
@@ -15,9 +18,11 @@ const displayFormComm = (formComm) => {
 }
 
 const insertComm = async (form, e) => {
-    e.preventDefault();
 
-    const response = await fetch("article-commentaire.php?commentaire=ok")
+    e.preventDefault();
+    let formComment = new FormData(form)
+
+    const response = await fetch("article-commentaire.php?commentaires=ok", {body: formComment ,method: "POST"})
     const dataJSON = await response.json()
 
     displayErrorComm(dataJSON);
@@ -25,8 +30,10 @@ const insertComm = async (form, e) => {
 
 const displayErrorComm = (dataJSON) => {
 
+    let comm_error = document.querySelector("#errorComm")
+
     const errorComments = document.createElement("small")
-    comm_error.appendChild(errorComment)
+    comm_error.appendChild(errorComments)
 
     if(dataJSON['errorComment']) {
         const commentProblem = document.createElement("div")
@@ -45,9 +52,18 @@ console.log(buttonComm)
 buttonComm.addEventListener("click", async () => {
     formComm = await fetchFormComm();
     displayFormComm(formComm);
-    let buttonSubmitComm = document.querySelector("#submitComm")
+    const commentForm = document.querySelector("#formComm")
+    let comment = document.querySelector("#comment");
+    console.log(commentForm)
+    console.log(comment);
 
-    buttonSubmitComm.addEventListener("submit", (e) => {
-        insertComm(formComm, e)
+
+    commentForm.addEventListener("submit", (e) => {
+        insertComm(commentForm, e);
     })
 })
+
+
+const displayComm = () => {
+
+}

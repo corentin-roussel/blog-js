@@ -9,6 +9,7 @@
 <html lang="en">
 <head>
     <?php require_once ('_include/head.php')?>
+
     <title>Articles</title>
 </head>
 <body>
