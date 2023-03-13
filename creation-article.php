@@ -31,8 +31,8 @@
                 <textarea class="input" name="content" id="content" required></textarea>
                 <div id="errorContent" class="error"></div>
 
-                <label for="categorie" class="space text-creation">Choose a category :</label>                          <!-- Rajouter les catégories -->
-                <select name="categorie" id="categorie">        <!-- avec une boucle php? -->
+                <label for="categorie" class="space text-creation">Choose a category :</label>
+                <select name="categorie" id="categorie">
                     <option value="" class="selestCategorie">--Category--</option>
 
                     <?php

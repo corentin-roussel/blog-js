@@ -47,6 +47,46 @@
 <?php die(); endif ?>
 
 
+
+
+
+
+
+
+
+
+
+<?php if(isset($_GET['utilisateurs'])): ?>
+
+<?php die(); endif ?>
+
+
+
+<?php if(isset($_GET['commentaires'])): ?>
+
+<?php die(); endif ?>
+
+
+
+<?php if(isset($_GET['articles'])): ?>
+
+<?php die(); endif ?>
+
+
+
+<?php if(isset($_GET['categories'])): ?>
+
+<?php die(); endif ?>
+
+
+
+
+
+
+
+
+
+
 <?php
 
 $user = new User();
