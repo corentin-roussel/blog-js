@@ -323,3 +323,74 @@
 #titre, #content, #categorie {
     width: 80vw;
 }
+
+/*********************************PAGE ARTICLE*********************************/
+
+.form-article-container {
+    display: flex;
+    justify-content: start;
+    margin: 2rem;
+}
+
+#listeArticleForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    font-family: var(--font-text);
+    color: var(--article-text-color);
+    font-size: 1.2rem;
+    container: fit-content;
+}
+
+.input-select {
+    border-radius: 15px;
+    padding: 0.3rem;
+    border: 2px solid black;
+}
+
+#pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.paginationNum {
+    text-decoration: none;
+    color: black;
+    margin-right: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+
+/*********************************PAGE COMMENTAIRE*********************************/
+
+#formComm {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#displayComment {
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.title-comment {
+    font-family: var(--font-title);
+    color: var(--article-text-color);
+    font-size: 1.5rem;
+    container: fit-content;
+}
+
+.para-comment {
+    font-family: var(--font-text);
+    color: var(--article-text-color);
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    container: fit-content;
+}
+
+.br-comment {
+    margin: 1rem;
+}

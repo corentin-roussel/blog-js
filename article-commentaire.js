@@ -1,9 +1,8 @@
 let comment_place = document.querySelector("#place")
-let comment_form = document.querySelector("#formComm")
 let displayComment = document.querySelector("#displayComment");
 
 
-console.log(window.location.search);
+
 
 const fetchFormComm = async () => {
     const response = await fetch("commentaire.php")
@@ -30,14 +29,15 @@ const insertComm = async (form, e) => {
 
 const displayErrorComm = (dataJSON) => {
 
-    let comm_error = document.querySelector("#errorComm")
+    let comm_error = document.querySelector("#errorComm");
+    comm_error.innerHTML = "";
 
-    const errorComments = document.createElement("small")
-    comm_error.appendChild(errorComments)
+    const errorComments = document.createElement("small");
+    comm_error.appendChild(errorComments);
 
     if(dataJSON['errorComment']) {
-        const commentProblem = document.createElement("div")
-        commentProblem.innerHTML = dataJSON['errorComment']
+        const commentProblem = document.createElement("div");
+        commentProblem.innerHTML = dataJSON['errorComment'];
         errorComments.appendChild(commentProblem);
 
     }
@@ -46,8 +46,6 @@ const displayErrorComm = (dataJSON) => {
     }
 }
 
-const buttonComm = document.querySelector("#switchComment")
-console.log(buttonComm)
 
 window.addEventListener("load", async () => {
     formComm = await fetchFormComm();
@@ -64,7 +62,6 @@ window.addEventListener("load", async () => {
 
 
 window.addEventListener("load", () => {
-
     displayComm();
 })
 
@@ -75,12 +72,18 @@ const comment = (reponse) => {
     for(let comm of reponse)
     {
         let title = document.createElement("h3")
-        title.innerHTML = "Fait par " + comm.login + " le " + comm.date_creation
+        title.innerHTML = "Fait par " + comm.login + " le " + comm.date_creation;
+        title.setAttribute("class", "title-comment")
         displayComment.append(title)
 
         let contenu = document.createElement("p")
-        contenu.innerHTML = comm.contenu
+        contenu.innerHTML = comm.contenu;
+        contenu.setAttribute("class", "para-comment")
         displayComment.append(contenu)
+
+        let br = document.createElement("hr")
+        br.setAttribute("class", "br-comment")
+        displayComment.append(br)
     }
 }
 

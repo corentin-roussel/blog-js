@@ -17,12 +17,12 @@
 
     <main>
 
-        <div class="liste-container">
+        <div class="form-article-container">
 
             <form action="" method="POST" id="listeArticleForm">
 
-                <label for="listeCategorie" class="space text-liste">Category :</label>
-                <select name="listeCategorie" id="listeCategorie">
+                <label for="listeCategorie" class="space text-liste form-label">Category :</label>
+                <select class="space input-select" name="listeCategorie" id="listeCategorie">
                     <option value="" class="selectCategorie">All</option>
 
                     <?php
@@ -41,6 +41,8 @@
                         $req = $conn->prepare($sql);
                         $req->execute();
                         $noms = $req->fetchAll(PDO::FETCH_CLASS);
+
+                        var_dump($noms);
                     
                         for ($i=0; isset($noms[$i]); $i++) { 
                             foreach ($noms[$i] as $value) {
@@ -51,8 +53,8 @@
                     
                 </select>
 
-                <label for="nbArticles" class="space text-liste">Articles per page :</label>
-                <select name="nbArticles" id="nbArticles">
+                <label for="nbArticles" class="space text-liste form-label">Articles per page :</label>
+                <select class="space input-select" name="nbArticles" id="nbArticles">
                     <option value="5" class="nbArticles">5</option>
                     <option value="10" class="nbArticles">10</option>
                     <option value="15" class="nbArticles">15</option>

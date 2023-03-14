@@ -38,7 +38,6 @@ if(isset($_GET['commentaires'])) {
     <main>
         <?php
         if(isset($_GET['article'])) {
-            var_dump($_GET);
             $article->getArticles();
         }
         ?>
