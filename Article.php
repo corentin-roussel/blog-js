@@ -9,8 +9,8 @@ class Article
     private ?int $id_utilisateur;
     private ?string $contenu;
     private ?string $titre;
-    private $date_creation;
-    private $date_modification;
+    private ?string $date_creation;
+    private ?string $date_modification;
     private ?int $id_categorie;
     private ?PDO $conn;
     
@@ -275,6 +275,44 @@ class Article
         return $this->id_categorie;
     }
 
+
+    //****************** DISPLAY ******************//
+
+    public function getShortArticles() {
+
+        $req = $this->conn->prepare("SELECT *, articles.id, SUBSTRING(contenu, 1,50) AS 'short_contenu'  FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON articles.id_categorie = categories.id ORDER BY articles.id DESC");
+        $req->execute();
+        $article = $req->fetchAll(PDO::FETCH_ASSOC);
+
+
+        foreach($article as $key => $values) {
+
+            echo "<section class='article-place'>
+                    <h2 class='article-title'><a class='link-article' href='article-commentaire.php?article=$values[id]'>$values[titre]</a></h2>
+                    <p class='article-text'><small>$values[nom]</small></p>
+                    <p class='article-text'>$values[short_contenu]...</p>
+                  </section>";
+        }
+
+
+    }
+
+
+    public function getArticles() {
+
+        $req = $this->conn->prepare("SELECT *, articles.id FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON articles.id_categorie = categories.id WHERE articles.id = :id");
+        $req->execute([
+            ":id" => $_GET['article']
+        ]);
+        $article = $req->fetch(PDO::FETCH_ASSOC);
+        echo "<section class='article-place'>
+                <h2 class='article-title'>$article[titre]</h2>
+                <p class='article-text'><small>$article[nom]</small></p>
+                <p class='article-text'>$article[contenu].</p>
+              </section>";
+
+
+    }
 }
 
 ?>
