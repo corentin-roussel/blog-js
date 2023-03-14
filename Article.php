@@ -134,7 +134,7 @@ class Article
             $req->execute();
         }
 
-        $tab = $req->fetchAll(PDO::FETCH_CLASS);
+        $tab = $req->fetchAll(PDO::FETCH_ASSOC);
 
         $temp = $numPage - 1;
 
@@ -143,9 +143,9 @@ class Article
             if(isset($tab[$j])) {
             
                 echo "<section class='article-place'>
-                        <a href='articles-page.php?article=" . $tab[$j]->id . "'><h2 class='article-title'>" . $tab[$j]->titre . "</h2></a>
-                        <p class='article-text'><small>" . $tab[$j]->nom . "</small></p>
-                        <p class='article-text'>" . $tab[$j]->short_contenu . "...</p>
+                        <a href='article-commentaire.php?article=" . $tab[$j]['id'] . "'><h2 class='article-title'>" . $tab[$j]['titre'] . "</h2></a>
+                        <p class='article-text'><small>" . $tab[$j]['nom'] . "</small></p>
+                        <p class='article-text'>" . $tab[$j]['short_contenu'] . "...</p>
                         </section>"
                 ;
             }
