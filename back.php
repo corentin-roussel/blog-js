@@ -82,7 +82,7 @@
 
     foreach ($tabUsers as $user) : ?>
 
-        <div class="uneLigneUser">
+        <div class="uneLigne">
 
             <form class="form" id="<?php echo $user['id'] ?>">
 
@@ -107,14 +107,14 @@
 
             </form>
 
-            <button class="suppr" id="<?php echo $user['id'] ?>">Delete user</button>
+            <button class="suppr" id="supprUser<?php echo $user['id'] ?>">Delete user</button>
 
         </div>
 
     <?php endforeach;
 
 }
-die(); ?>
+?>
 
 
 
@@ -131,27 +131,119 @@ die(); ?>
         echo "Error : " . $e->getMessage();
     }
 
-    $sqlComm = "SELECT *, commentaires.id FROM commentaires INNER JOIN utilisateurs ON utilisateurs.id = commentaires.id_utilisateur INNER JOIN articles ON articles.id = commentaires.id_article ORDER BY commentaires.date_creation";
+    $sqlComm = "SELECT *, commentaires.id, commentaires.contenu, commentaires.date_creation FROM commentaires INNER JOIN utilisateurs ON utilisateurs.id = commentaires.id_utilisateur INNER JOIN articles ON articles.id = commentaires.id_article ORDER BY commentaires.date_creation DESC";
     $reqComm = $conn->prepare($sqlComm);
     $reqComm->execute();
     $tabComm = $reqComm->fetchAll(PDO::FETCH_ASSOC);
 
-    var_dump($tabComm[0]);
+    foreach ($tabComm as $comm) : ?>
 
-}
-die(); ?>
+        <div class="uneLigne">
+
+            <p>Date : <?php echo $comm['date_creation'] ?></p>
+            <p>Auteur : <?php echo $comm['login'] ?></p>
+            <p>Article : <?php echo $comm['titre'] ?></p>
+
+        </div>
+
+        <p>Contenu : <?php echo $comm['contenu'] ?></p>
+
+        <button class="modif" id="modifComm<?php echo $comm['id'] ?>">Mofify comment</button>
+        <button class="suppr" id="supprComm<?php echo $comm['id'] ?>">Delete comment</button>
+        
+    <?php endforeach;
+
+} ?>
 
 
 
-<?php if(isset($_GET['articles'])): ?>
+<?php if(isset($_GET['articles'])) {
 
-<?php die(); endif ?>
+    $db_username = 'root';
+    $db_password = '';
+
+    try{
+        $conn = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', $db_username, $db_password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+    catch(PDOException $e){
+        echo "Error : " . $e->getMessage();
+    }
+
+    $sqlArt = "SELECT *, articles.id FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON categories.id = articles.id_categorie ORDER BY articles.date_creation DESC";
+    $reqArt = $conn->prepare($sqlArt);
+    $reqArt->execute();
+    $tabArt = $reqArt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($tabArt as $article) : ?>
+
+        <h4><?php echo $article['titre'] ?></h4>
+        <p><?php echo $article['nom'] ?></p>
+        
+        <div class="uneLigne">
+
+            <p><?php echo $article['login'] ?></p>
+            <p><?php echo $article['date_creation'] ?></p>
+
+        </div>
+
+        <p>Contenu : <?php echo $article['contenu'] ?></p>
+
+        <button class="modif" id="modifArt<?php echo $article['id'] ?>">Mofify article</button>
+        <button class="suppr" id="supprArt<?php echo $article['id'] ?>">Delete article</button>
+
+    <?php endforeach;
+
+} ?>
 
 
 
-<?php if(isset($_GET['categories'])): ?>
+<?php if(isset($_GET['categories'])) {
 
-<?php die(); endif ?>
+    $db_username = 'root';
+    $db_password = '';
+
+    try{
+        $conn = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', $db_username, $db_password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+    catch(PDOException $e){
+        echo "Error : " . $e->getMessage();
+    }
+
+    $sqlCat = "SELECT * FROM categories";
+    $reqCat = $conn->prepare($sqlCat);
+    $reqCat->execute();
+    $tabCat = $reqCat->fetchAll(PDO::FETCH_ASSOC);
+
+    var_dump($tabCat[0]) ?>
+
+    <div class="displayCategorie">
+
+        <?php foreach ($tabCat as $categorie) : ?>
+
+            <p><?php echo $categorie['nom'] ?></p>
+
+            <button class="modif" id="modifCat<?php echo $categorie['id'] ?>">Modify category</button>
+
+            <button class="suppr" id="spprCat<?php echo $categorie['id'] ?>">Delete category</button>
+            
+        <?php endforeach ?>
+
+    </div>
+
+    <div class="ajoutCategorie">
+
+        <form class="form">
+
+            <input type="text" name="addCat" id="addCat">
+            <button type="submit">Create a category</button>
+
+        </form>
+
+    </div>
+
+<?php } ?>
 
 
 
@@ -182,8 +274,6 @@ if(isset($_GET['signin'])) {
 
 
 <?php
-
-echo 'okie';
 
 $article = new Article();
 
