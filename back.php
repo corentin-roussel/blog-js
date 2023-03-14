@@ -69,14 +69,39 @@
         echo "Error : " . $e->getMessage();
     }
 
-    $sql1 = ("SELECT *,utilisateurs.id FROM utilisateurs INNER JOIN roles ON utilisateurs.id_roles = roles.id");
-    $req1 = $conn->prepare($sql1);
-    $req1->execute();
-    $tabUser = $req1->fetchAll(PDO::FETCH_ASSOC);
+    $sqlUsers = "SELECT *, utilisateurs.id FROM utilisateurs INNER JOIN roles ON utilisateurs.id_roles = roles.id";
+    $reqUsers = $conn->prepare($sqlUsers);
+    $reqUsers->execute();
+    $tabUsers = $reqUsers->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach ($tabUser as $value) {
-        var_dump($value);
-    }
+    $sqlRoles = "SELECT id, droits FROM roles";
+    $reqRoles = $conn->prepare($sqlRoles);
+    $reqRoles->execute();
+    $tabRoles = $reqRoles->fetchAll(PDO::FETCH_ASSOC);
+
+    var_dump($tabUsers['0']);
+    var_dump($tabRoles['0']);
+
+    foreach ($tabUsers as $user) : ?>
+
+        <p><?php echo $user['login']; ?></p>
+        <label for="<?php echo $user['id']; ?>">Change role :</label>
+            <select name="<?php echo $user['id']; ?>">
+
+                <option value=""><?php echo $user['droits']; ?></option>
+
+                <?php foreach ($tabRoles as $role) : 
+                    
+                    if($role['droits'] != $user['droits']) : ?>
+
+                        <option value="<?php echo $role['droits']; ?>"><?php echo $role['droits']; ?></option>
+
+                    <?php endif;
+                endforeach; ?>
+
+            </select>
+
+    <?php endforeach;
 
 }
 ?>
