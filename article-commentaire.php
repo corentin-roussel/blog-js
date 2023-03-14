@@ -28,7 +28,7 @@ if(isset($_GET['commentaires'])) {
 <html lang="en">
 <head>
     <?php require_once ('_include/head.php') ?>
-    <script defer src="commentaire.js"></script>
+    <script defer src="article-commentaire.js"></script>
     <title>Article</title>
 </head>
 <body>
