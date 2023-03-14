@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <?php require_once '_include/head.php' ?>
-    <script src="creation-article.js" defer></script>
+    <script src="articles-page.js" defer></script>
     <title>Document</title>
 </head>
 <body>
@@ -17,23 +17,13 @@
 
     <main>
 
-        <div class="creation-container">
+        <div class="liste-container">
 
-            <form action="" method="POST" id="creaArticleForm">
+            <form action="" method="POST" id="listeArticleForm">
 
-                <h2 class="title-creation">Create an article</h2>
-
-                <label for="titre" class="space text-creation">Titre</label>
-                <input class="input" type="text" name="titre" id="titre" required />
-                <div id="errorTitre" class="error"></div>
-
-                <label for="content" class="space text-creation">Content</label>
-                <textarea class="input" name="content" id="content" required></textarea>
-                <div id="errorContent" class="error"></div>
-
-                <label for="categorie" class="space text-creation">Choose a category :</label>
-                <select name="categorie" id="categorie">
-                    <option value="" class="selestCategorie">--Category--</option>
+                <label for="listeCategorie" class="space text-liste">Category :</label>
+                <select name="listeCategorie" id="listeCategorie">
+                    <option value="" class="selectCategorie">All</option>
 
                     <?php
                         $db_username = 'root';
@@ -54,21 +44,42 @@
                     
                         for ($i=0; isset($noms[$i]); $i++) { 
                             foreach ($noms[$i] as $value) {
-                    
                                 echo '<option value="' . $value . '">' . $value . '</option>';
-                    
                             }
                         }
                     ?>
-
+                    
                 </select>
-                <div id="errorCategorie" class="error"></div>
 
-                <button class="button-form" type="submit" name="submit" id="publish">Publish article</button>
+                <label for="nbArticles" class="space text-liste">Articles per page :</label>
+                <select name="nbArticles" id="nbArticles">
+                    <option value="5" class="nbArticles">5</option>
+                    <option value="10" class="nbArticles">10</option>
+                    <option value="15" class="nbArticles">15</option>
+                    <option value="20" class="nbArticles">20</option>
+                </select>
+
+                <button class="button-form" type="submit" name="submit" id="filter">Filter</button>
 
             </form>
 
         </div>
+
+        <div id="displayListe">
+
+            <?php
+                if(!isset($_GET['pagination'])) {
+                    $numPage = 1;
+                }else{
+                    $numPage = $_GET['pagination'];
+                }
+            ?>
+
+            <article id="flex-article"></article>
+
+        </div>
+
+        <div id="pagination"></div>
 
     </main>
 

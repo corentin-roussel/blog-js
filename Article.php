@@ -122,6 +122,65 @@ class Article
     }
 
 
+    public function getArticlesListe(?int $artParPage, ?int $numPage, ?string $categorie) {
+
+        if($categorie) {
+            $sql = "SELECT *,articles.id, SUBSTRING(contenu, 1,50) AS 'short_contenu' FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON categories.id = articles.id_categorie WHERE nom = :categorie ORDER BY articles.date_creation DESC";
+            $req = $this->conn->prepare($sql);
+            $req->execute(array(':categorie' => $categorie));
+        }else{
+            $sql = "SELECT *,articles.id, SUBSTRING(contenu, 1,50) AS 'short_contenu' FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON categories.id = articles.id_categorie ORDER BY articles.date_creation DESC";
+            $req = $this->conn->prepare($sql);
+            $req->execute();
+        }
+
+        $tab = $req->fetchAll(PDO::FETCH_CLASS);
+
+        $temp = $numPage - 1;
+
+        for ($j=$artParPage * $temp; $j < $artParPage * $numPage; $j++) {
+
+            if(isset($tab[$j])) {
+            
+                echo "<section class='article-place'>
+                        <a href='articles-page.php?article=" . $tab[$j]->id . "'><h2 class='article-title'>" . $tab[$j]->titre . "</h2></a>
+                        <p class='article-text'><small>" . $tab[$j]->nom . "</small></p>
+                        <p class='article-text'>" . $tab[$j]->short_contenu . "...</p>
+                        </section>"
+                ;
+            }
+        }
+    }
+
+    public function pagination(?int $artParPage, ?string $categorie) {
+
+        if(!empty($categorie)) {
+            $sql = "SELECT * FROM articles INNER JOIN categories ON articles.id_categorie = categories.id WHERE nom = :categorie";
+            $req = $this->conn->prepare($sql);
+            $req->execute(array(':categorie' => $categorie));
+        }else{
+            $sql = "SELECT * FROM articles";
+            $req = $this->conn->prepare($sql);
+            $req->execute();
+        }
+
+        $row = $req->rowCount();
+        $nbPaginition = (int) $row / $artParPage;
+
+        if($row % $artParPage > 0) {
+
+            $nbPaginition = (int) $nbPaginition + 1;
+
+        }
+
+        for ($i=1; $i <= $nbPaginition; $i++) {
+
+            echo '<a href="articles-page.php?pagination=' . $i . '" class="paginationNum">' . $i . '   </a>';
+
+        }
+    }
+
+
     //*************** VERIFICATIONS ***************//
 
     private function verifTitre(?string $title) {

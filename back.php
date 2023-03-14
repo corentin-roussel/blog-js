@@ -47,8 +47,48 @@
 </div>
 <?php die(); endif ?>
 
-<?php
 
+
+
+
+
+
+
+
+
+
+<?php if(isset($_GET['utilisateurs'])): ?>
+
+<?php die(); endif ?>
+
+
+
+<?php if(isset($_GET['commentaires'])): ?>
+
+<?php die(); endif ?>
+
+
+
+<?php if(isset($_GET['articles'])): ?>
+
+<?php die(); endif ?>
+
+
+
+<?php if(isset($_GET['categories'])): ?>
+
+<?php die(); endif ?>
+
+
+
+
+
+
+
+
+
+
+<?php
 
 $user = new User();
 
@@ -77,5 +117,50 @@ if(isset($_GET['create'])) {
 
 }
 
+if(isset($_GET['displayArt'])) {
+
+    if(isset($_GET['numPage'])) {
+        $numPage = $_GET['numPage'];
+    }
+
+    if(isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
+
+        $article->getArticlesListe($_POST['nbArticles'], $numPage, $_POST['listeCategorie']);
+
+    }elseif (isset($_POST['nbArticles']) && !isset($_POST['listeCategorie'])) {
+
+        $article->getArticlesListe($_POST['nbArticles'], $numPage, "");
+
+    }elseif (!isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
+
+        $article->getArticlesListe(5, $numPage, $_POST['listeCategorie']);
+
+    }else{
+        $article->getArticlesListe(5, $numPage, "");
+    }
+
+}
+
+if(isset($_GET['displayPagination'])) {
+
+    if(isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
+
+        $article->pagination($_POST['nbArticles'], $_POST['listeCategorie']);
+
+    }elseif (!isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
+        
+        $article->pagination(5, $_POST['listeCategorie']);
+
+    }elseif (isset($_POST['nbArticles']) && !isset($_POST['listeCategorie'])) {
+        
+        $article->pagination($_POST['nbArticles'], "");
+
+    }else{
+
+        $article->pagination(5, "");
+
+    }
+
+}
 
 ?>
