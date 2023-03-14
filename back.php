@@ -80,9 +80,6 @@
     $reqRoles->execute();
     $tabRoles = $reqRoles->fetchAll(PDO::FETCH_ASSOC);
 
-    var_dump($tabUsers['0']);
-    var_dump($tabRoles['0']);
-
     foreach ($tabUsers as $user) : ?>
 
         <div class="uneLigneUser">
@@ -116,13 +113,33 @@
 
     <?php endforeach;
 
-} ?>
+}
+die(); ?>
 
 
 
-<?php if(isset($_GET['commentaires'])): ?>
+<?php if(isset($_GET['commentaires'])) {
 
-<?php die(); endif ?>
+    $db_username = 'root';
+    $db_password = '';
+
+    try{
+        $conn = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', $db_username, $db_password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+    catch(PDOException $e){
+        echo "Error : " . $e->getMessage();
+    }
+
+    $sqlComm = "SELECT *, commentaires.id FROM commentaires INNER JOIN utilisateurs ON utilisateurs.id = commentaires.id_utilisateur INNER JOIN articles ON articles.id = commentaires.id_article ORDER BY commentaires.date_creation";
+    $reqComm = $conn->prepare($sqlComm);
+    $reqComm->execute();
+    $tabComm = $reqComm->fetchAll(PDO::FETCH_ASSOC);
+
+    var_dump($tabComm[0]);
+
+}
+die(); ?>
 
 
 
@@ -166,6 +183,8 @@ if(isset($_GET['signin'])) {
 
 <?php
 
+echo 'okie';
+
 $article = new Article();
 
 if(isset($_GET['create'])) {
@@ -176,45 +195,58 @@ if(isset($_GET['create'])) {
 
 if(isset($_GET['displayArt'])) {
 
+    echo 'oki';
+
     if(isset($_GET['numPage'])) {
         $numPage = $_GET['numPage'];
+        echo 'ok1';
     }
 
     if(isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
 
         $article->getArticlesListe($_POST['nbArticles'], $numPage, $_POST['listeCategorie']);
+        echo 'ok2';
 
     }elseif (isset($_POST['nbArticles']) && !isset($_POST['listeCategorie'])) {
 
         $article->getArticlesListe($_POST['nbArticles'], $numPage, "");
+        echo 'ok3';
 
     }elseif (!isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
 
         $article->getArticlesListe(5, $numPage, $_POST['listeCategorie']);
+        echo 'ok4';
 
     }else{
         $article->getArticlesListe(5, $numPage, "");
+        echo 'ok5';
     }
 
 }
 
 if(isset($_GET['displayPagination'])) {
 
+    echo 'oke';
+
     if(isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
 
         $article->pagination($_POST['nbArticles'], $_POST['listeCategorie']);
+        echo 'ok6';
 
     }elseif (!isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
         
         $article->pagination(5, $_POST['listeCategorie']);
+        echo 'ok7';
 
     }elseif (isset($_POST['nbArticles']) && !isset($_POST['listeCategorie'])) {
         
         $article->pagination($_POST['nbArticles'], "");
+        echo 'ok8';
 
     }else{
 
         $article->pagination(5, "");
+        echo 'ok9';
 
     }
 
