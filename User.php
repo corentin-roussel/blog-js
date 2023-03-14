@@ -104,7 +104,7 @@ class User
 
             if(password_verify($password,$dataPass)){
 
-                $_SESSION['user'] = array("id" => $id, "login" => $login, "password" => $dataPass, "id_roles" => $id_roles);
+                $_SESSION['user'] = array("id" => $id, "login" => $login, "password" => $dataPass, "roles" => $id_roles);
 //                $_SESSION['login'] = $login;
 //                $_SESSION['password'] = $dataPass;
 //                $_SESSION['id_roles'] = $id_roles;
@@ -269,6 +269,8 @@ class User
 
     }
 
+
+    //A déplacer dans la class article
     public function getLastArticles() {
 
         $req = $this->conn->prepare("SELECT *, SUBSTRING(contenu, 1,50) AS 'short_contenu'  FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON articles.id_categorie = categories.id ORDER BY articles.id DESC LIMIT 5");

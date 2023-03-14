@@ -1,6 +1,7 @@
 <?php
     require_once 'User.php';
     require_once 'Article.php';
+    require_once 'Comment.php';
     if(session_status() == PHP_SESSION_NONE){ session_start();}
 ?>
 
