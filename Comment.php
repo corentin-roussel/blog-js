@@ -14,7 +14,7 @@ class Comment
 
     private ?int $id_article;
 
-    private ?PDO $conn;
+    public ?PDO $conn;
 
     public function __construct()
     {
@@ -41,31 +41,22 @@ class Comment
 
     public function insertComment(?string $contenu) {
 
+        $get = $_GET['article'];
+        $getInt = (int)$get;
         $messages = [];
         $okComment = false;
         $dateCrea = date('Y-m-d H:i:s');
         $this->setDateCrea($dateCrea);
         $this->setDateModif($dateCrea);
         $this->setIdUser($_SESSION['user']['id']);
-        if(isset($_GET['article']))
-        {
-            $this->setIdArticle($_GET['article']);
-        };
-
-
-//        $req = $this->conn->prepare("SELECT articles.id FROM articles WHERE articles.id = :id");
-//        $req->execute([
-//            ":id" => $_GET['article']
-//        ]);
-//        $get_article = $req->fetch(PDO::FETCH_ASSOC);
-
+        $this->setIdArticle($getInt);
 
 
         $checkComment = $this->checkComment($contenu);
 
 
 
-        if($checkComment === "ok comment")
+        if($checkComment == "ok comment")
         {
 
             $this->setContenu($contenu);
@@ -77,20 +68,34 @@ class Comment
             $messages['errorComment'] = $checkComment;
         }
 
-        if($checkComment === true)
+        if($okComment === true)
         {
-            $req = $this->conn->prepare("INSERT INTO `commentaires`(`id_utilisateur`, `contenu`, `date_creation`, `date_modification`, `id_article`) VALUES (':id_utilisateur',':contenu','date_creation',':date_modification',':id_article')");
-            $req->execute([
+            $req = $this->conn->prepare("INSERT INTO `commentaires`(id_utilisateur, contenu, date_creation, date_modification, id_article) VALUES (:id_utilisateur,:contenu,:date_creation,:date_modification,:id_article)");
+            $req->execute(array(
                 ":id_utilisateur" => $this->id_utilisateur,
                 ":contenu" => $this->contenu,
                 ":date_creation" => $this->date_creation,
-                "date_modification" => $this->date_modification,
+                ":date_modification" => $this->date_modification,
                 ":id_article" => $this->id_article
-            ]);
+            ));
             $messages['success'] = "Comment is posted";
         }
 
         $json = json_encode($messages, JSON_PRETTY_PRINT);
+        echo $json;
+
+        die();
+    }
+
+    public function getCommentaires() {
+        $req = $this->conn->prepare("SELECT *, commentaires.id FROM commentaires INNER JOIN utilisateurs ON utilisateurs.id = commentaires.id_utilisateur WHERE commentaires.id_article = :id_article");
+         $req->execute([
+            ":id_article" => $_GET['article']
+        ]);
+        $comm = $req->fetchAll(PDO::FETCH_ASSOC);
+
+        $json = json_encode($comm, JSON_PRETTY_PRINT);
+
         echo $json;
 
         die();
@@ -101,11 +106,11 @@ class Comment
 
     public function checkComment($commentaire)
     {
-        if(isset($commentaire)) {
+        if(!empty(trim($commentaire))) {
 
             if(grapheme_strlen($commentaire) < 1000)
             {
-                return "ok commment";
+                return "ok comment";
             }else {
                 return "The comment can contain only 1000 characters";
             }

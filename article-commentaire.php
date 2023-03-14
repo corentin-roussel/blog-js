@@ -9,6 +9,13 @@
     $comment = new Comment();
 
 
+    if(isset($_GET['commentaire']))
+    {
+        $comment->getCommentaires();
+    }
+
+
+
 if(isset($_GET['commentaires'])) {
     $comment->insertComment($_POST['comment']);
 }
@@ -35,10 +42,10 @@ if(isset($_GET['commentaires'])) {
             $article->getArticles();
         }
         ?>
-        <div id="button">
-            <button id="switchComment">Comment</button>
-        </div>
         <div id ="place">
+
+        </div>
+        <div id="displayComment">
 
         </div>
     </main>
