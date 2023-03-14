@@ -85,27 +85,38 @@
 
     foreach ($tabUsers as $user) : ?>
 
-        <p><?php echo $user['login']; ?></p>
-        <label for="<?php echo $user['id']; ?>">Change role :</label>
-            <select name="<?php echo $user['id']; ?>">
+        <div class="uneLigneUser">
 
-                <option value=""><?php echo $user['droits']; ?></option>
+            <form class="form" id="<?php echo $user['id'] ?>">
 
-                <?php foreach ($tabRoles as $role) : 
-                    
-                    if($role['droits'] != $user['droits']) : ?>
+                <label for="<?php echo $user['id'] ?>"><?php echo $user['login'] ?></label>
+                <select name="<?php echo $user['id'] ?>">
 
-                        <option value="<?php echo $role['droits']; ?>"><?php echo $role['droits']; ?></option>
+                    <option value=""><?php echo $user['droits'] ?></option>
 
-                    <?php endif;
-                endforeach; ?>
+                    <?php foreach ($tabRoles as $role) : 
+                        
+                        if($role['droits'] != $user['droits']) : ?>
 
-            </select>
+                            <option value="<?php echo $role['droits'] ?>"><?php echo $role['droits'] ?></option>
+
+                        <?php endif;
+                        
+                    endforeach; ?>
+
+                </select>
+
+                <button type="submit">Change role</button>
+
+            </form>
+
+            <button class="suppr" id="<?php echo $user['id'] ?>">Delete user</button>
+
+        </div>
 
     <?php endforeach;
 
-}
-?>
+} ?>
 
 
 

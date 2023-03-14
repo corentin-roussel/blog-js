@@ -323,3 +323,13 @@
 #titre, #content, #categorie {
     width: 80vw;
 }
+
+
+
+/*********************************ADMIN*********************************/
+
+.uneLigneUser {
+    display: flex;
+    background-color: #b20000;
+    width: 100vw;
+}

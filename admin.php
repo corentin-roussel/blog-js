@@ -32,6 +32,7 @@
 <head>
     <?php require_once '_include/head.php' ?>
     <!-- <script src="admin.js" defer></script> -->
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
@@ -52,7 +53,7 @@
         </nav>
 
         <div id="contenu"></div>
-
+        
     </main>
 
     <footer>
