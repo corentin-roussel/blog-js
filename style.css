@@ -14,17 +14,25 @@
 
 /*********************************HTML*********************************/
 
-* {
+html, body {
     margin: 0;
     padding: 0;
+    height: 100%;
     box-sizing: border-box;
+}
+
+.wrapper {
+    box-sizing: border-box;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 /*********************************HEADER*********************************/
 
 .flex-header {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     background-color: var(--theme-header-background-color);
     box-shadow: 0px 1px 2px 2px grey;
@@ -41,10 +49,19 @@
     font-size: 1.5rem;
 }
 
+.page-footer, .page-header {
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.page-body {
+    flex-grow: 1;
+}
+
 
 /*********************************MAIN*********************************/
 #flex-article {
-    margin: 2rem;
+
 }
 
 .article-title {
@@ -58,6 +75,9 @@
     color : var(--article-title-color);
     font-size: 3rem;
     margin: 2rem;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 .article-text {
@@ -66,6 +86,9 @@
     font-size: 1.2rem;
     padding-top: 1.5rem;
     container: fit-content;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 .article-place {
@@ -83,6 +106,7 @@
     width: 100%;
     height: auto;
     background-color: var(--theme-footer-background-color);
+    bottom: 0;
 }
 
 .about-blog {
@@ -324,6 +348,12 @@
     width: 80vw;
 }
 
+.create-article {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
 /*********************************PAGE ARTICLE*********************************/
 
 .form-article-container {
@@ -389,6 +419,9 @@
     font-size: 1.2rem;
     margin-top: 1rem;
     container: fit-content;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 .br-comment {

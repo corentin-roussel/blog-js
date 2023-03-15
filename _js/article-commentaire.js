@@ -1,6 +1,5 @@
-let comment_place = document.querySelector("#place")
+let comment_place = document.querySelector("#place");
 let displayComment = document.querySelector("#displayComment");
-
 
 
 
@@ -50,6 +49,7 @@ const displayErrorComm = (dataJSON) => {
 window.addEventListener("load", async () => {
     formComm = await fetchFormComm();
     displayFormComm(formComm);
+    displayComm();
     const commentForm = document.querySelector("#formComm")
     let comment = document.querySelector("#comment");
 
@@ -57,22 +57,37 @@ window.addEventListener("load", async () => {
     commentForm.addEventListener("submit", (e) => {
         insertComm(commentForm, e);
         displayComm();
+        comment.value = ""
     })
 })
 
 
-window.addEventListener("load", () => {
-    displayComm();
-})
+const formatDate = (date) => {
+    let mySQLDate = date
+    let jsDate = new Date(date);
+    let day = jsDate.getDate()
+    let month = jsDate.getMonth()
+    let year = jsDate.getFullYear()
 
+    let hour = jsDate.getHours()
+    let minutes = jsDate.getMinutes()
+    let seconds = jsDate.getSeconds()
+
+    return displayDate(day) + "-" + displayDate(month) + "-" + year + " a " + displayDate(hour) + ":" + displayDate(minutes) + ":" + displayDate(seconds)
+}
+const displayDate = (date) => {
+    return (date < 10) ? '0' + date : date
+}
 
 const comment = (reponse) => {
     displayComment.innerHTML = "";
 
     for(let comm of reponse)
     {
+        const dateFormat = formatDate(comm.date_creation)
+
         let title = document.createElement("h3")
-        title.innerHTML = "Fait par " + comm.login + " le " + comm.date_creation;
+        title.innerHTML = "Fait par " + comm.login + " le " + dateFormat ;
         title.setAttribute("class", "title-comment")
         displayComment.append(title)
 

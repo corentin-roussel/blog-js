@@ -1,8 +1,8 @@
 <?php
 require_once ('_Class/User.php');
 if(session_status() == PHP_SESSION_NONE){ session_start();}
-
 $user = new User();
+
 
 if(isset($_GET['profile'])) {
     $user->Update($_POST['login'], $_POST['password'], $_POST['newPassword'], $_POST['newPasswordConfirm']);
@@ -17,11 +17,11 @@ if(isset($_GET['profile'])) {
     <script defer src="_js/profil.js"></script>
     <title>Profile</title>
 </head>
-<body>
-    <header>
+<body class="wrapper">
+    <header class="page-header">
             <?php require_once('_include/header.php') ?>
     </header>
-    <main>
+    <main class="page-body">
         <div class="profile-container">
             <form action="#" method="POST" id="formProfile">
                 <h2 class="title-profile">Profile</h2>
@@ -44,7 +44,7 @@ if(isset($_GET['profile'])) {
             </form>
         </div>
     </main>
-    <footer>
+    <footer class="page-footer">
             <?php require_once('_include/footer.php') ?>
     </footer>
 </body>

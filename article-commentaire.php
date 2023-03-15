@@ -31,11 +31,11 @@ if(isset($_GET['commentaires'])) {
     <script defer src="_js/article-commentaire.js"></script>
     <title>Article</title>
 </head>
-<body>
-    <header>
+<body class="wrapper">
+    <header class="page-header">
         <?php require_once ('_include/header.php') ?>
     </header>
-    <main>
+    <main class="page-body">
         <?php
         if(isset($_GET['article'])) {
             $article->getArticles();
@@ -48,7 +48,7 @@ if(isset($_GET['commentaires'])) {
 
         </div>
     </main>
-    <footer>
+    <footer class="page-footer">
         <?php require_once ('_include/footer.php')?>
     </footer>
 </body>

@@ -4,18 +4,23 @@
 <head>
     <?php require_once '_include/head.php' ?>
     <script src="_js/articles-page.js" defer></script>
-    <title>Document</title>
+    <title>Articles</title>
 </head>
-<body>
+<body class="wrapper">
 
 
     <?php require_once '_Class/Article.php' ?>
 
-    <header>
+    <header class="page-header">
         <?php require_once '_include/header.php' ?>
     </header>
 
-    <main>
+    <main class="page-body">
+
+        <div class="create-article">
+            <a class="link" href="creation-article.php">Create an article</a>
+
+        </div>
 
         <div class="form-article-container">
 
@@ -85,7 +90,7 @@
 
     </main>
 
-    <footer>
+    <footer class="page-footer">
         <?php require_once '_include/footer.php' ?>
     </footer>
     

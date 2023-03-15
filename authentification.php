@@ -12,12 +12,12 @@ require_once '_Class/User.php';?>
 
 
 
-<body>
-    <header>
+<body class="wrapper">
+    <header class="page-header">
         <?php require_once '_include/header.php' ?>
     </header>
 
-    <main id="main">
+    <main class="page-body" id="main">
 
         <div id="buttons">
             <button id="switchInscription">Sign up</button>
@@ -27,7 +27,7 @@ require_once '_Class/User.php';?>
         <div id="divForm"></div>
 
     </main>
-    <footer>
+    <footer class="page-footer">
         <?php require_once '_include/footer.php' ?>
     </footer>
 
