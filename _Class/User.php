@@ -270,24 +270,7 @@ class User
     }
 
 
-    //A déplacer dans la class article
-    public function getLastArticles() {
 
-        $req = $this->conn->prepare("SELECT *, SUBSTRING(contenu, 1,50) AS 'short_contenu'  FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON articles.id_categorie = categories.id ORDER BY articles.id DESC LIMIT 5");
-        $req->execute();
-        $article = $req->fetchAll(PDO::FETCH_ASSOC);
-
-
-        foreach($article as $key => $values) {
-            echo "<section class='article-place'>
-                    <h2 class='article-title'>$values[titre]</h2>
-                    <p class='article-text'><small>$values[nom]</small></p>
-                    <p class='article-text'>$values[short_contenu]...</p>
-                  </section>";
-        }
-
-
-    }
 
 }
 

@@ -1,7 +1,7 @@
 <?php
-    require_once 'User.php';
-    require_once 'Article.php';
-    require_once 'Comment.php';
+    require_once '_Class/User.php';
+    require_once '_Class/Article.php';
+    require_once '_Class/Comment.php';
     if(session_status() == PHP_SESSION_NONE){ session_start();}
 ?>
 

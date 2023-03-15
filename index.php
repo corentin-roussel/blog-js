@@ -1,8 +1,8 @@
 <?php
-    require_once('User.php');
+    require_once('_Class/Article.php');
     if(session_status() == PHP_SESSION_NONE){ session_start();}
 
-    $user = new User();
+    $article = new Article();
 
 
 ?>
@@ -20,7 +20,7 @@
     <main>
         <h1 class="last-article-title">Last articles</h1>
         <article id="flex-article">
-            <?php  $user->getLastArticles(); ?>
+            <?php  $article->getLastArticles(); ?>
         </article>
     </main>
     <footer>

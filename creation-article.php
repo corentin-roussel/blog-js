@@ -1,15 +1,16 @@
-<?php if (session_status() == PHP_SESSION_NONE){ session_start();} ?>
+<?php
+if (session_status() == PHP_SESSION_NONE){ session_start();} ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php require_once '_include/head.php' ?>
-    <script src="creation-article.js" defer></script>
+    <script src="_js/creation-article.js" defer></script>
     <title>Document</title>
 </head>
 <body>
 
 
-    <?php require_once 'Article.php' ?>
+    <?php require_once '_Class/Article.php' ?>
 
     <header>
         <?php require_once '_include/header.php' ?>

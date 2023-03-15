@@ -1,11 +1,12 @@
-<?php require_once 'User.php';?>
+<?php
+require_once '_Class/User.php';?>
 
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <?php require_once('_include/head.php')?>
-    <script defer src="authentification.js"></script>
+    <script defer src="_js/authentification.js"></script>
     <title>Authenticate</title>
 </head>
 

@@ -1,5 +1,5 @@
 <?php
-require_once ('User.php');
+require_once ('_Class/User.php');
 if(session_status() == PHP_SESSION_NONE){ session_start();}
 
 $user = new User();
@@ -14,7 +14,7 @@ if(isset($_GET['profile'])) {
 <html lang="en">
 <head>
     <?php require_once('_include/head.php') ?>
-    <script defer src="profil.js"></script>
+    <script defer src="_js/profil.js"></script>
     <title>Profile</title>
 </head>
 <body>
