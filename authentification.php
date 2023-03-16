@@ -1,5 +1,7 @@
 <?php
-require_once '_Class/User.php';?>
+require_once '_Class/User.php';
+if (session_status() == PHP_SESSION_NONE){ session_start();}
+?>
 
 
 <!DOCTYPE html>
@@ -20,8 +22,8 @@ require_once '_Class/User.php';?>
     <main class="page-body" id="main">
 
         <div id="buttons">
-            <button id="switchInscription">Sign up</button>
-            <button id="switchConnexion">Sign in</button>
+            <button id="switchInscription" class="start-btn">Sign up</button>
+            <button id="switchConnexion" class="start-btn">Sign in</button>
         </div>
 
         <div id="divForm"></div>

@@ -12,6 +12,13 @@
 
 }
 
+@font-face {
+    font-family: 'press-start';
+    src: url('_font/PressStart2P.ttf') format('truetype'), url('_font/PressStart2P.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /*********************************HTML*********************************/
 
 html, body {
@@ -107,10 +114,12 @@ html, body {
     height: auto;
     background-color: var(--theme-footer-background-color);
     bottom: 0;
+    margin-bottom: 0;
 }
 
 .about-blog {
     margin: 1rem;
+    margin-bottom: 0;
 }
 
 .link-blog {
@@ -118,10 +127,12 @@ html, body {
     flex-direction: column;
     margin: 1rem;
     font-family: var(--font-text);
+    margin-bottom: 0;
 }
 
 .contact-blog {
     margin: 1rem;
+    margin-bottom: 0;
 }
 
 .footer-link {
@@ -141,12 +152,14 @@ html, body {
     color: var(--title-color);
     font-family: var(--font-title);
     font-size: 1.4rem;
+    margin-top: 0;
 }
 
 .footer-text {
     color: var(--text-color);
     font-family: var(--font-text);
     font-size: 1.1rem;
+    margin-top: 0;
 }
 
 
@@ -175,15 +188,21 @@ html, body {
     width: fit-content;
     margin-top: 1rem;
     padding: 0.5rem;
-    background-color: grey;
     text-decoration: none;
     cursor: pointer;
-    border: none;
-    border-radius: 15px;
+    border: white 1px solid;
+    border-radius: 5px;
     font-family: var(--font-text);
     font-size: 1.2rem;
+    transition: background-color 900ms;
+    transition: color 900ms;
 }
 
+.button-form:hover {
+    background-color: black;
+    color: white;
+    border: #ecefba 1px solid;
+}
 
 .button-form:active {
     transform: translateY(4px);
@@ -225,6 +244,11 @@ html, body {
     font-family: var(--font-text);
     color: var(--article-background-color);
     font-size: 1.5rem;
+    backdrop-filter: blur(15px);
+    padding: 0.3rem;
+    border: white 1px solid;
+    border-radius: 5px;
+    margin-bottom: 1rem;
 }
 
 .conn-title {
@@ -235,10 +259,18 @@ html, body {
 .conn-text {
     font-family: var(--font-text);
     font-size: 1.5rem;
+    backdrop-filter: blur(15px);
+    padding: 0.3rem;
+    border: black 1px solid;
+    border-radius: 5px;
+    margin-bottom: 1rem;
 }
 
 .input {
     width: fit-content;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: #ecefba;
 }
 
 .error {
@@ -258,11 +290,38 @@ html, body {
 #switchConnexion {
     margin: 1rem;
     padding: 0.5rem;
+    font-family: 'press-start';
+
 }
 
 #switchInscription {
     margin: 1rem;
     padding: 0.5rem;
+    font-family: 'press-start';
+}
+
+.start-btn{
+    text-align: center;
+    display: inline-block;
+    margin:5px;
+    font-weight: bold;
+    padding: 10px 0 10px 10px ;
+    background-color: lightgray;
+    text-shadow: -1px -1px black, 1px 1px white;
+    color: gray;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    -o-border-radius: 7px;
+    border-radius: 7px;
+    box-shadow: 0 .2em gray;
+    cursor: pointer;
+
+}
+
+.start-btn:active {
+    box-shadow: none;
+    position: relative;
+    top: .2em;
 }
 
 /*********************************PROFILE*********************************/
@@ -278,7 +337,7 @@ html, body {
 }
 
 #formProfile {
-    width: 100%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     background-image: url("_img/mario-profile.jpeg");
@@ -293,12 +352,18 @@ html, body {
     font-family: var(--font-text);
     color: #000000;
     font-size: 1.5rem;
+    backdrop-filter: blur(15px);
+    padding: 0.3rem;
+    border: black 1px solid;
+    border-radius: 5px;
+    margin-bottom: 1rem;
 }
 
 .title-profile {
     font-family: var(--font-title);
     color: #000000;
     font-size: 2rem;
+
 }
 
 
@@ -426,4 +491,44 @@ html, body {
 
 .br-comment {
     margin: 1rem;
+}
+
+/*********************************MEDIA QUERIES*********************************/
+
+@media (min-width: 800px){
+    .flex-footer {
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    #formProfile {
+        align-items: center;
+    }
+
+    .connexion-container {
+        align-items: center;
+        height: 500px;
+    }
+
+    #signinForm {
+        width: 30%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+
+    .inscription-container {
+        align-items: center;
+        height: 500px;
+    }
+
+    #signupForm {
+        width: 30%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
 }

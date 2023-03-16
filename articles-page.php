@@ -1,4 +1,8 @@
-<?php if (session_status() == PHP_SESSION_NONE){ session_start();} ?>
+<?php
+
+    if (session_status() == PHP_SESSION_NONE){ session_start();}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,12 +19,13 @@
         <?php require_once '_include/header.php' ?>
     </header>
 
-    <main class="page-body">
 
+    <main class="page-body">
+        <?php if($_SESSION['user']['articles'] == 1) { ?>
         <div class="create-article">
             <a class="link" href="creation-article.php">Create an article</a>
-
         </div>
+        <?php }?>
 
         <div class="form-article-container">
 

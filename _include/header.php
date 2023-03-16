@@ -5,7 +5,7 @@
         <a class="link" href="index.php">Home</a>
         <a class="link" href="profil.php">Profile</a>
         <a class="link" href="articles-page.php">Article</a>
-        <a class="link" href="deconnexion.php">Disconnect</a>
+        <a class="link" id="disconnect" href="deconnexion.php">Disconnect</a>
 <?php
     }else {
 ?>

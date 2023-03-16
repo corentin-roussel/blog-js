@@ -210,7 +210,7 @@ class User
     public static function Disconnect() {
 
         session_destroy();
-        exit('Vous avez bien été deconnecté');
+        exit('You\'ve been disconnected');
 
     }
 
