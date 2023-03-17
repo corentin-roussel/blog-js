@@ -3,6 +3,17 @@
     require_once 'Article.php';
     require_once 'Comment.php';
     if(session_status() == PHP_SESSION_NONE){ session_start();}
+
+    $db_username = 'root';
+    $db_password = '';
+
+    try{
+        $conn = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', $db_username, $db_password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+    catch(PDOException $e){
+        echo "Error : " . $e->getMessage();
+    }
 ?>
 
 
@@ -59,17 +70,6 @@
 
 <?php if(isset($_GET['utilisateurs'])) {
 
-    $db_username = 'root';
-    $db_password = '';
-
-    try{
-        $conn = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', $db_username, $db_password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
-    catch(PDOException $e){
-        echo "Error : " . $e->getMessage();
-    }
-
     $sqlUsers = "SELECT *, utilisateurs.id FROM utilisateurs INNER JOIN roles ON utilisateurs.id_roles = roles.id";
     $reqUsers = $conn->prepare($sqlUsers);
     $reqUsers->execute();
@@ -82,12 +82,15 @@
 
     foreach ($tabUsers as $user) : ?>
 
-        <div class="uneLigne">
+        <br><div class="uneLigne">
+
+        <p><?php echo $user['login'] ?></p>
+
+        <?php if($user['droits'] != 'admin') : ?>
 
             <form class="form" id="<?php echo $user['id'] ?>">
 
-                <label for="<?php echo $user['id'] ?>"><?php echo $user['login'] ?></label>
-                <select name="<?php echo $user['id'] ?>">
+                <select name="role">
 
                     <option value=""><?php echo $user['droits'] ?></option>
 
@@ -106,39 +109,70 @@
                 <button type="submit">Change role</button>
 
             </form>
+        
+        <?php endif; ?>
 
-            <button class="suppr" id="supprUser<?php echo $user['id'] ?>">Delete user</button>
+        <button class="suppr" id="supprUser<?php echo $user['id'] ?>" name="<?php echo $user['id'] ?>">Delete user</button> <br>
 
         </div>
 
     <?php endforeach;
 
-}
-?>
+} ?>
+
+<?php if(isset($_GET['changeRole'])) {
+
+    var_dump($_POST);
+    var_dump($_GET);
+
+    if(isset($_POST['role']) && !empty($_POST['role'])) {
+
+        $sqlRole = "SELECT * FROM roles WHERE droits = :droits";
+        $reqRole = $conn->prepare($sqlRole);
+        $reqRole->execute(array(':droits' => $_POST['role']));
+        $tabRole = $reqRole->fetchAll(PDO::FETCH_ASSOC);
+
+        var_dump($tabRole);
+
+        $sql = "UPDATE utilisateurs SET id_roles = :id_role WHERE id = :id";
+        $req = $conn->prepare($sql);
+        $req->execute(array(':id_role' => $tabRole[0]['id'],
+                            ':id' => $_GET['idUserChange']
+        ));
+
+        echo 'le role est changé';
+
+    }
+
+} ?>
+
+<?php if(isset($_GET['deleteUser'])) {
+
+    var_dump($_GET);
+
+    $sql = "DELETE FROM utilisateurs WHERE id = :id";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':id' => $_GET['idUserDel']));
+
+    echo "l'utilisateur est supprimé";
+
+} ?>
+
 
 
 
 <?php if(isset($_GET['commentaires'])) {
-
-    $db_username = 'root';
-    $db_password = '';
-
-    try{
-        $conn = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', $db_username, $db_password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
-    catch(PDOException $e){
-        echo "Error : " . $e->getMessage();
-    }
 
     $sqlComm = "SELECT *, commentaires.id, commentaires.contenu, commentaires.date_creation FROM commentaires INNER JOIN utilisateurs ON utilisateurs.id = commentaires.id_utilisateur INNER JOIN articles ON articles.id = commentaires.id_article ORDER BY commentaires.date_creation DESC";
     $reqComm = $conn->prepare($sqlComm);
     $reqComm->execute();
     $tabComm = $reqComm->fetchAll(PDO::FETCH_ASSOC);
 
+    $temp = 1;
+
     foreach ($tabComm as $comm) : ?>
 
-        <div class="uneLigne">
+        <br><div class="uneLigne">
 
             <p>Date : <?php echo $comm['date_creation'] ?></p>
             <p>Auteur : <?php echo $comm['login'] ?></p>
@@ -148,27 +182,61 @@
 
         <p>Contenu : <?php echo $comm['contenu'] ?></p>
 
-        <button class="modif" id="modifComm<?php echo $comm['id'] ?>">Mofify comment</button>
-        <button class="suppr" id="supprComm<?php echo $comm['id'] ?>">Delete comment</button>
+        <button class="modif" name="<?php echo $comm['id'] ?>">Mofify comment</button>
+        <button class="suppr" name="<?php echo $comm['id'] ?>">Delete comment</button><br>
+
+        <div id="<?php echo $temp ?>"></div>
         
-    <?php endforeach;
+    <?php
+    $temp++;
+    endforeach;
+
+} ?>
+
+<?php if(isset($_GET['modifCom'])) :
+
+    $sql = "SELECT * FROM commentaires WHERE id = :comId";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':comId' => $_GET['idCom']));
+    $tab = $req->fetchAll(PDO::FETCH_ASSOC);
+
+    var_dump($tab); ?>
+
+    <form id='<?php echo $tab[0]['id'] ?>'>
+        <textarea name="contenuComModif" cols="40" rows="7"><?php echo $tab[0]['contenu'] ?></textarea>
+        <button type="submit">Modify comment</button>
+    </form>
+
+<?php endif; ?>
+
+<?php if(isset($_GET['ifModif'])) {
+
+    $sql = "UPDATE commentaires SET contenu = :contenu WHERE id = :id";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':contenu' => $_POST['contenuComModif'],
+                        ':id' => $_GET['idComm']
+    ));
+
+    echo 'commentaire modifie';
+
+} ?>
+
+<?php if(isset($_GET['deleteCom'])) {
+
+    var_dump($_GET);
+
+    $sql = "DELETE FROM commentaires WHERE id = :id";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':id' => $_GET['idCom']));
+
+    echo "le commentaire est supprimé";
 
 } ?>
 
 
 
+
 <?php if(isset($_GET['articles'])) {
-
-    $db_username = 'root';
-    $db_password = '';
-
-    try{
-        $conn = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', $db_username, $db_password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
-    catch(PDOException $e){
-        echo "Error : " . $e->getMessage();
-    }
 
     $sqlArt = "SELECT *, articles.id FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON categories.id = articles.id_categorie ORDER BY articles.date_creation DESC";
     $reqArt = $conn->prepare($sqlArt);
@@ -177,7 +245,7 @@
 
     foreach ($tabArt as $article) : ?>
 
-        <h4><?php echo $article['titre'] ?></h4>
+        <br><h4><?php echo $article['titre'] ?></h4>
         <p><?php echo $article['nom'] ?></p>
         
         <div class="uneLigne">
@@ -187,10 +255,11 @@
 
         </div>
 
-        <p>Contenu : <?php echo $article['contenu'] ?></p>
+        <p>Contenu :</p>
+        <p><?php echo $article['contenu'] ?></p>
 
         <button class="modif" id="modifArt<?php echo $article['id'] ?>">Mofify article</button>
-        <button class="suppr" id="supprArt<?php echo $article['id'] ?>">Delete article</button>
+        <button class="suppr" id="supprArt<?php echo $article['id'] ?>">Delete article</button><br>
 
     <?php endforeach;
 
@@ -198,25 +267,15 @@
 
 
 
+
 <?php if(isset($_GET['categories'])) {
-
-    $db_username = 'root';
-    $db_password = '';
-
-    try{
-        $conn = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', $db_username, $db_password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
-    catch(PDOException $e){
-        echo "Error : " . $e->getMessage();
-    }
 
     $sqlCat = "SELECT * FROM categories";
     $reqCat = $conn->prepare($sqlCat);
     $reqCat->execute();
     $tabCat = $reqCat->fetchAll(PDO::FETCH_ASSOC);
 
-    var_dump($tabCat[0]) ?>
+    ?>
 
     <div class="displayCategorie">
 
@@ -236,7 +295,7 @@
 
         <form class="form">
 
-            <input type="text" name="addCat" id="addCat">
+            <input type="text" name="addCat" id="addCat" required>
             <button type="submit">Create a category</button>
 
         </form>

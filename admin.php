@@ -17,8 +17,6 @@
     $req->execute(array(':userId' => $_SESSION['user']['id']));
     $tabUserRole = $req->fetchAll(PDO::FETCH_ASSOC);
 
-    var_dump($tabUserRole);
-
     if(!$_SESSION['user'] || $tabUserRole[0]['utilisateurs'] === 0 && $tabUserRole[0]['commentaires'] === 0 && $tabUserRole[0]['articles'] === 0 && $tabUserRole[0]['categories'] === 0) {
 
         header('Location: index.php');
@@ -31,7 +29,7 @@
 <html lang="en">
 <head>
     <?php require_once '_include/head.php' ?>
-    <!-- <script src="admin.js" defer></script> -->
+    <script src="admin.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
@@ -46,7 +44,7 @@
         <nav>
             <ul>
                 <?php echo $tabUserRole[0]['utilisateurs'] == 1 ? "<li id='changeUser'>Users</li>" : "" ?>
-                <?php echo $tabUserRole[0]['commentaires'] == 1 ? "<li id='changeComm'>Comments</li>" : "" ?>
+                <?php echo $tabUserRole[0]['commentaires'] == 1 ? "<li id='changeCom'>Comments</li>" : "" ?>
                 <?php echo $tabUserRole[0]['articles'] == 1 ? "<li id='changeArt'>Articles</li>" : "" ?>
                 <?php echo $tabUserRole[0]['categories'] == 1 ? "<li id='changeCat'>Categories</li>" : "" ?>
             </ul>
