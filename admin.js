@@ -94,17 +94,17 @@ displayChangeCom.addEventListener('click', async() => {
     
     for(let modif of modifComButtons) {
         
-        const divFromModif = document.getElementById(temp);
+        const divFromModif = document.getElementById('divCom' + temp);
 
         temp++;
 
         modif.addEventListener('click', async() => {
             const response = await fetch('back.php?modifCom=1&idCom=' + modif.name);
-            const formModif = await response.text();
+            const formModifText = await response.text();
 
-            console.log(formModif);
+            let formModif = document.createRange().createContextualFragment(formModifText);
 
-            divFromModif.innerHTML = formModif;
+            divFromModif.appendChild(formModif);
         
             const fromModif = document.getElementById(modif.name);
 
@@ -114,7 +114,7 @@ displayChangeCom.addEventListener('click', async() => {
 
                 const formModifData = new FormData(fromModif);
 
-                const responseForm = await fetch('back.php?ifModif=1&idComm=' + modif.name , {method: "POST", body: formModifData});
+                const responseForm = await fetch('back.php?ifModifCom=1&idComm=' + modif.name , {method: "POST", body: formModifData});
                 const message = await responseForm.text();
 
                 displayCom();
@@ -128,14 +128,10 @@ displayChangeCom.addEventListener('click', async() => {
 
     for(let supprCom of supprComButtons) {
 
-        console.log(supprCom);
-
         supprCom.addEventListener('click', async() => {
 
             const response = await fetch('back.php?deleteCom=1&idCom=' + supprCom.name);
             const retour = await response.text();
-
-            console.log(retour)
 
             displayCom();
 
@@ -146,17 +142,139 @@ displayChangeCom.addEventListener('click', async() => {
 displayChangeArt.addEventListener('click', async() => {
 
     await displayArt();
+
+    const modifArtButtons = document.getElementsByClassName('modif');
+
+    let temp = 1;
     
+    for(let modif of modifArtButtons) {
+        
+        const divFromModif = document.getElementById('divArt' + temp);
+
+        temp++;
+
+        modif.addEventListener('click', async() => {
+            const response = await fetch('back.php?modifArt=1&idArt=' + modif.name);
+            const formModifText = await response.text();
+
+            let formModif = document.createRange().createContextualFragment(formModifText);
+
+            divFromModif.appendChild(formModif);
+
+            divFromModif.innerHTML = formModif;
+        
+            const fromModif = document.getElementById(modif.name);
+
+            fromModif.addEventListener('submit', async(e) => {
+
+                e.preventDefault();
+
+                const formModifData = new FormData(fromModif);
+
+                const responseForm = await fetch('back.php?ifModifArt=1&idArt=' + modif.name , {method: "POST", body: formModifData});
+                const message = await responseForm.text();
+
+                displayArt();
+
+            })
+        })
+    }
+
+    const supprArtButtons = document.getElementsByClassName('suppr');
+
+    for(let supprArt of supprArtButtons) {
+
+        supprArt.addEventListener('click', async() => {
+
+            const response = await fetch('back.php?deleteArt=1&idArt=' + supprArt.name);
+            const retour = await response.text();
+
+            displayArt();
+
+        })
+    }
+
+
 })
-
-
-
-
-
-
 
 displayChangeCat.addEventListener('click', async() => {
 
     await displayCat();
+
+    const modifCatButtons = document.getElementsByClassName('modif');
+
+    let temp = 1;
     
+    for(let modif of modifCatButtons) {
+        
+        const divLigne = document.getElementById('ligne' + temp);
+
+        temp++;
+
+        modif.addEventListener('click', async() => {
+
+            const response = await fetch('back.php?modifCat=1&idCat=' + modif.name);
+            const formModifText = await response.text();
+
+            let formModif = document.createRange().createContextualFragment(formModifText);
+
+            divLigne.appendChild(formModif);
+        
+            const fromMod = document.getElementById(modif.name);
+
+            console.log(fromMod);
+
+            fromMod.addEventListener('submit', async(e) => {
+
+                e.preventDefault();
+
+                const formModifData = new FormData(fromMod);
+
+                const responseForm = await fetch('back.php?ifModifCat=1&idCat=' + modif.name , {method: "POST", body: formModifData});
+                const message = await responseForm.text();
+
+                console.log(message);
+
+                displayCat();
+
+            })
+        })
+    }
+
+    const supprCatButtons = document.getElementsByClassName('suppr');
+
+    for(let supprCat of supprCatButtons) {
+
+        supprCat.addEventListener('click', async() => {
+
+            const response = await fetch('back.php?deleteCat=1&idCat=' + supprCat.name);
+            const retour = await response.text();
+
+            console.log(retour)
+
+            displayCat();
+
+        })
+    }
+
+    const addCatForm = document.getElementById('addCatForm');
+
+    addCatForm.addEventListener('submit', async(e) => {
+
+        e.preventDefault();
+
+        const formAddCatData = new FormData(addCatForm);
+
+        const responseAddCat = await fetch('back.php?createCat=1', {method: "POST", body: formAddCatData});
+        const message = await responseAddCat.text();
+
+        console.log(message);
+
+        displayCat();
+
+
+
+    })
+
+
 })

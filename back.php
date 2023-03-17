@@ -17,6 +17,8 @@
 ?>
 
 
+
+
 <?php if(isset($_GET['inscription'])): ?>
 <div class="inscription-container">
     <form action="" method="POST" id="signupForm" class="form">
@@ -38,7 +40,6 @@
 </div>
 <?php die (); endif ?>
 
-
 <?php if(isset($_GET['connexion'])): ?>
 <div class="connexion-container">
     <form action="" method="POST" id="signinForm" class="form">
@@ -57,13 +58,6 @@
     </form>
 </div>
 <?php die(); endif ?>
-
-
-
-
-
-
-
 
 
 
@@ -160,7 +154,6 @@
 
 
 
-
 <?php if(isset($_GET['commentaires'])) {
 
     $sqlComm = "SELECT *, commentaires.id, commentaires.contenu, commentaires.date_creation FROM commentaires INNER JOIN utilisateurs ON utilisateurs.id = commentaires.id_utilisateur INNER JOIN articles ON articles.id = commentaires.id_article ORDER BY commentaires.date_creation DESC";
@@ -172,25 +165,24 @@
 
     foreach ($tabComm as $comm) : ?>
 
-        <br><div class="uneLigne">
+        <div id="divCom<?php echo $temp; $temp++ ?>">
 
-            <p>Date : <?php echo $comm['date_creation'] ?></p>
-            <p>Auteur : <?php echo $comm['login'] ?></p>
-            <p>Article : <?php echo $comm['titre'] ?></p>
+            <br><div class="uneLigne">
+
+                <p>Date : <?php echo $comm['date_creation'] ?></p>
+                <p>Auteur : <?php echo $comm['login'] ?></p>
+                <p>Article : <?php echo $comm['titre'] ?></p>
+
+            </div>
+
+            <p>Contenu : <?php echo $comm['contenu'] ?></p>
 
         </div>
 
-        <p>Contenu : <?php echo $comm['contenu'] ?></p>
-
         <button class="modif" name="<?php echo $comm['id'] ?>">Mofify comment</button>
         <button class="suppr" name="<?php echo $comm['id'] ?>">Delete comment</button><br>
-
-        <div id="<?php echo $temp ?>"></div>
         
-    <?php
-    $temp++;
-    endforeach;
-
+    <?php endforeach; 
 } ?>
 
 <?php if(isset($_GET['modifCom'])) :
@@ -209,7 +201,7 @@
 
 <?php endif; ?>
 
-<?php if(isset($_GET['ifModif'])) {
+<?php if(isset($_GET['ifModifCom'])) {
 
     $sql = "UPDATE commentaires SET contenu = :contenu WHERE id = :id";
     $req = $conn->prepare($sql);
@@ -235,7 +227,6 @@
 
 
 
-
 <?php if(isset($_GET['articles'])) {
 
     $sqlArt = "SELECT *, articles.id FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON categories.id = articles.id_categorie ORDER BY articles.date_creation DESC";
@@ -243,28 +234,90 @@
     $reqArt->execute();
     $tabArt = $reqArt->fetchAll(PDO::FETCH_ASSOC);
 
+    $temp = 1;
+
     foreach ($tabArt as $article) : ?>
 
-        <br><h4><?php echo $article['titre'] ?></h4>
-        <p><?php echo $article['nom'] ?></p>
-        
-        <div class="uneLigne">
+        <div id="divArt<?php echo $temp; $temp++ ?>">
 
-            <p><?php echo $article['login'] ?></p>
-            <p><?php echo $article['date_creation'] ?></p>
+            <br><h4><?php echo $article['titre'] ?></h4>
+            <p><?php echo $article['nom'] ?></p>
+            
+            <div class="uneLigne">
+
+                <p><?php echo $article['login'] ?></p>
+                <p><?php echo $article['date_creation'] ?></p>
+
+            </div>
+
+            <p>Contenu :</p>
+            <p><?php echo $article['contenu'] ?></p>
 
         </div>
 
-        <p>Contenu :</p>
-        <p><?php echo $article['contenu'] ?></p>
-
-        <button class="modif" id="modifArt<?php echo $article['id'] ?>">Mofify article</button>
-        <button class="suppr" id="supprArt<?php echo $article['id'] ?>">Delete article</button><br>
+        <button class="modif" name="<?php echo $article['id'] ?>">Mofify article</button>
+        <button class="suppr" name="<?php echo $article['id'] ?>">Delete article</button><br>
 
     <?php endforeach;
 
 } ?>
 
+<?php if(isset($_GET['modifArt'])) :
+
+    $sql = "SELECT * FROM articles WHERE id = :artId";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':artId' => $_GET['idArt']));
+    $tab = $req->fetchAll(PDO::FETCH_ASSOC); ?>
+
+    <form id='<?php echo $tab[0]['id'] ?>'>
+        <input type="text" name="titreArtModif" value="<?php echo $tab[0]['titre'] ?>">
+        <textarea name="contenuArtModif" cols="40" rows="7"><?php echo $tab[0]['contenu'] ?></textarea>
+        <button type="submit">Modify article</button>
+    </form>
+
+<?php endif; ?>
+
+<?php if(isset($_GET['ifModifArt'])) {
+
+    $sql = "SELECT * FROM articles WHERE id = :id";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':id' => $_GET['idArt']));
+    $tab = $req->fetchAll(PDO::FETCH_ASSOC);
+
+    if (isset($_POST['titreArtModif']) && $_POST['titreArtModif'] != $tab[0]['titre']) {
+
+        $sqlTitre = "UPDATE articles SET titre = :titre WHERE id = :id";
+        $reqTitre = $conn->prepare($sqlTitre);
+        $reqTitre->execute(array(':titre' => $_POST['titreArtModif'],
+                                ':id' => $_GET['idArt']
+        ));
+
+        echo 'titre article modifie';
+    }
+
+
+    if (isset($_POST['contenuArtModif']) && $_POST['contenuArtModif'] != $tab[0]['contenu']) {
+
+        $sqlContenu = "UPDATE articles SET contenu = :contenu WHERE id = :id";
+        $reqContenu = $conn->prepare($sqlContenu);
+        $reqContenu->execute(array(':contenu' => $_POST['contenuArtModif'],
+                                ':id' => $_GET['idArt']
+        ));
+
+        echo 'contenu article modifie';
+    }
+
+} ?>
+
+<?php if(isset($_GET['deleteArt'])) {
+
+    $sql = "DELETE FROM articles WHERE id = :id";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':id' => $_GET['idArt']));
+
+    echo "l'article est supprimé";
+
+} ?>
 
 
 
@@ -275,25 +328,30 @@
     $reqCat->execute();
     $tabCat = $reqCat->fetchAll(PDO::FETCH_ASSOC);
 
+    $temp = 1;
+
     ?>
 
     <div class="displayCategorie">
 
         <?php foreach ($tabCat as $categorie) : ?>
 
-            <p><?php echo $categorie['nom'] ?></p>
+            <div class="uneLigne" id="ligne<?php echo $temp; $temp++ ?>">
 
-            <button class="modif" id="modifCat<?php echo $categorie['id'] ?>">Modify category</button>
+                <p><?php echo $categorie['nom'] ?></p>
 
-            <button class="suppr" id="spprCat<?php echo $categorie['id'] ?>">Delete category</button>
+                <button class="modif" name="<?php echo $categorie['id'] ?>">Modify category</button>
+                <button class="suppr" name="<?php echo $categorie['id'] ?>">Delete category</button>
+
+            </div>
             
-        <?php endforeach ?>
+        <?php endforeach; ?>
 
     </div>
 
     <div class="ajoutCategorie">
 
-        <form class="form">
+        <form class="form" id="addCatForm">
 
             <input type="text" name="addCat" id="addCat" required>
             <button type="submit">Create a category</button>
@@ -304,6 +362,65 @@
 
 <?php } ?>
 
+<?php if(isset($_GET['modifCat'])) :
+
+    $sql = "SELECT * FROM categories WHERE id = :catId";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':catId' => $_GET['idCat']));
+    $tab = $req->fetchAll(PDO::FETCH_ASSOC); ?>
+
+    <form id='<?php echo $tab[0]['id'] ?>'>
+        <input type="text" name="nomCatModif" value="<?php echo $tab[0]['nom'] ?>">
+        <button type="submit">Modify category</button>
+    </form>
+
+<?php endif; ?>
+
+<?php if(isset($_GET['ifModifCat'])) {
+
+    $sql = "UPDATE categories SET nom = :nom WHERE id = :id";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':nom' => $_POST['nomCatModif'],
+                        ':id' => $_GET['idCat']
+    ));
+
+    echo 'Categorie modifie';
+
+} ?>
+
+<?php if(isset($_GET['deleteCat'])) {
+
+    $sql = "DELETE FROM categories WHERE id = :id";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':id' => $_GET['idCat']));
+
+    echo "le categorie est supprimé";
+
+} ?>
+
+<?php if(isset($_GET['createCat'])) {
+
+    $sql = "INSERT INTO categories (nom) VALUES (:nom)";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':nom' => $_POST['addCat']));
+    $tab = $req->fetchAll(PDO::FETCH_ASSOC);
+
+    echo 'cetegorie ajoutee';
+
+} ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -315,90 +432,89 @@
 
 <?php
 
-$user = new User();
+    $user = new User();
 
-if(isset($_GET['signup'])) {
+    if(isset($_GET['signup'])) {
 
-    $user->Register($_POST['login'], $_POST['password'], $_POST['passwordConfirm']);
+        $user->Register($_POST['login'], $_POST['password'], $_POST['passwordConfirm']);
 
-}
+    }
 
-if(isset($_GET['signin'])) {
+    if(isset($_GET['signin'])) {
 
-    $user->Connect($_POST['login'], $_POST['password']);
+        $user->Connect($_POST['login'], $_POST['password']);
 
-}
+    }
 
 ?>
 
-
 <?php
 
-$article = new Article();
+    $article = new Article();
 
-if(isset($_GET['create'])) {
+    if(isset($_GET['create'])) {
 
-    $article->checkArticle($_POST['content'], $_POST['titre'], $_POST['categorie']);
-
-}
-
-if(isset($_GET['displayArt'])) {
-
-    echo 'oki';
-
-    if(isset($_GET['numPage'])) {
-        $numPage = $_GET['numPage'];
-        echo 'ok1';
-    }
-
-    if(isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
-
-        $article->getArticlesListe($_POST['nbArticles'], $numPage, $_POST['listeCategorie']);
-        echo 'ok2';
-
-    }elseif (isset($_POST['nbArticles']) && !isset($_POST['listeCategorie'])) {
-
-        $article->getArticlesListe($_POST['nbArticles'], $numPage, "");
-        echo 'ok3';
-
-    }elseif (!isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
-
-        $article->getArticlesListe(5, $numPage, $_POST['listeCategorie']);
-        echo 'ok4';
-
-    }else{
-        $article->getArticlesListe(5, $numPage, "");
-        echo 'ok5';
-    }
-
-}
-
-if(isset($_GET['displayPagination'])) {
-
-    echo 'oke';
-
-    if(isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
-
-        $article->pagination($_POST['nbArticles'], $_POST['listeCategorie']);
-        echo 'ok6';
-
-    }elseif (!isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
-        
-        $article->pagination(5, $_POST['listeCategorie']);
-        echo 'ok7';
-
-    }elseif (isset($_POST['nbArticles']) && !isset($_POST['listeCategorie'])) {
-        
-        $article->pagination($_POST['nbArticles'], "");
-        echo 'ok8';
-
-    }else{
-
-        $article->pagination(5, "");
-        echo 'ok9';
+        $article->checkArticle($_POST['content'], $_POST['titre'], $_POST['categorie']);
 
     }
 
-}
+    if(isset($_GET['displayArt'])) {
+
+        echo 'oki';
+
+        if(isset($_GET['numPage'])) {
+            $numPage = $_GET['numPage'];
+            echo 'ok1';
+        }
+
+        if(isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
+
+            $article->getArticlesListe($_POST['nbArticles'], $numPage, $_POST['listeCategorie']);
+            echo 'ok2';
+
+        }elseif (isset($_POST['nbArticles']) && !isset($_POST['listeCategorie'])) {
+
+            $article->getArticlesListe($_POST['nbArticles'], $numPage, "");
+            echo 'ok3';
+
+        }elseif (!isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
+
+            $article->getArticlesListe(5, $numPage, $_POST['listeCategorie']);
+            echo 'ok4';
+
+        }else{
+            $article->getArticlesListe(5, $numPage, "");
+            echo 'ok5';
+        }
+
+    }
+
+    if(isset($_GET['displayPagination'])) {
+
+        echo 'oke';
+
+        if(isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
+
+            $article->pagination($_POST['nbArticles'], $_POST['listeCategorie']);
+            echo 'ok6';
+
+        }elseif (!isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
+            
+            $article->pagination(5, $_POST['listeCategorie']);
+            echo 'ok7';
+
+        }elseif (isset($_POST['nbArticles']) && !isset($_POST['listeCategorie'])) {
+            
+            $article->pagination($_POST['nbArticles'], "");
+            echo 'ok8';
+
+        }else{
+
+            $article->pagination(5, "");
+            echo 'ok9';
+
+        }
+
+    }
 
 ?>
