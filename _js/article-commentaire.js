@@ -46,6 +46,80 @@ const displayErrorComm = (dataJSON) => {
 }
 
 
+
+
+
+const likesCountArticle = async() => {
+
+    const articleId = window.location.search.split('=')[1];
+
+    const response = await fetch('back.php?likeCount=1&idArticle=' + articleId);
+    const numLike = await response.text();
+
+    return numLike.trim();
+
+}
+
+const isLiked = async() => {
+
+    const articleId = window.location.search.split('=')[1];
+
+    const response = await fetch('back.php?isLiked=1&idArticle=' + articleId);
+    const isLiked = await response.text();
+
+    return isLiked.trim();
+
+}
+
+const displayLikes = async() => {
+
+    const divLikes = document.getElementById('likesDisplay');
+    const likeNumString = await likesCountArticle();
+
+    const likeNum = document.createRange().createContextualFragment(likeNumString);
+    divLikes.appendChild(likeNum);
+
+}
+
+const displayHeart = async() => {
+    
+    const divLikes = document.getElementById('likesDisplay');
+    const isLikedResult = await isLiked();
+
+    if(isLikedResult == 1){
+
+        const likeIcon = document.createRange().createContextualFragment('<i class="fa-solid fa-heart" id="heartIcon"></i>');
+        divLikes.appendChild(likeIcon);
+
+    }else if(isLikedResult == 0){
+
+        const likeIcon = document.createRange().createContextualFragment('<i class="fa-regular fa-heart" id="heartIcon"></i>');
+        divLikes.appendChild(likeIcon);
+    }
+}
+
+const ifClickLike = async() => {
+    
+    const isLikedResult = await isLiked();
+    const articleId = window.location.search.split('=')[1];
+    
+
+    if(isLikedResult == 1){
+
+        await fetch('back.php?unlike=1&articleId=' + articleId);
+
+    }else{
+
+        await fetch('back.php?like=1&articleId=' + articleId);
+
+    }
+}
+
+
+
+
+
+
 window.addEventListener("load", async () => {
     formComm = await fetchFormComm();
     displayFormComm(formComm);
@@ -59,6 +133,26 @@ window.addEventListener("load", async () => {
         displayComm();
         comment.value = ""
     })
+
+
+    
+
+    await displayLikes();
+    await displayHeart();
+    const divLikes = document.getElementById('likesDisplay');
+
+    const heartIcon = document.getElementById('heartIcon');
+    
+    heartIcon.addEventListener('click', async() => {
+
+        await ifClickLike();
+
+        divLikes.innerHTML = "";
+        await displayLikes();
+        await displayHeart();
+
+    })
+
 })
 
 

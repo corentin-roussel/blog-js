@@ -309,7 +309,8 @@ class Article
                 <h2 class='article-title'>$article[titre]</h2>
                 <p class='article-text'><small>$article[nom]</small></p>
                 <p class='article-text'>$article[contenu].</p>
-              </section>";
+              </section>
+              <div id='likesDisplay'></div>";
 
 
     }
