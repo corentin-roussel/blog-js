@@ -502,9 +502,17 @@ html, body {
     margin: 1rem;
 }
 
+
+/*********************************ADMIN*********************************/
+.uneLigneUser {
+    display: flex;
+
+}
+
+
 /*********************************MEDIA QUERIES*********************************/
 
-@media (min-width: 800px){
+@media (min-width: 800px) {
     .flex-footer {
         flex-direction: row;
         justify-content: space-evenly;
@@ -528,7 +536,6 @@ html, body {
     }
 
 
-
     .inscription-container {
         align-items: center;
         height: 500px;
@@ -550,7 +557,5 @@ html, body {
     .article-place {
         width: 25%;
     }
-
-
 
 }
