@@ -64,9 +64,8 @@ displayChangeUser.addEventListener('click', async() => {
             const formData = new FormData(form);
 
             const response = await fetch('back.php?changeRole=1&idUserChange=' + form.id, {method: "POST", body: formData});
-            const data = await response.text();
+            await response.text();
         });
-        
     };
 
     const supprUser = document.getElementsByClassName('suppr');
@@ -76,12 +75,12 @@ displayChangeUser.addEventListener('click', async() => {
         supprButton.addEventListener('click', async() => {
 
             const response = await fetch('back.php?deleteUser=1&idUserDel=' + supprButton.name);
-            const retour = await response.text();
+            await response.text();
 
-            displayUser();
+            supprButton.parentNode.parentNode.removeChild(supprButton.parentNode);
 
-        })
-    }
+        });
+    };
 })
 
 displayChangeCom.addEventListener('click', async() => {
@@ -115,7 +114,7 @@ displayChangeCom.addEventListener('click', async() => {
                 const formModifData = new FormData(fromModif);
 
                 const responseForm = await fetch('back.php?ifModifCom=1&idComm=' + modif.name , {method: "POST", body: formModifData});
-                const message = await responseForm.text();
+                await responseForm.text();
 
                 displayCom();
 
@@ -131,10 +130,9 @@ displayChangeCom.addEventListener('click', async() => {
         supprCom.addEventListener('click', async() => {
 
             const response = await fetch('back.php?deleteCom=1&idCom=' + supprCom.name);
-            const retour = await response.text();
+            await response.text();
 
-            displayCom();
-
+            supprCom.parentNode.parentNode.removeChild(supprCom.parentNode);
         })
     }
 })
@@ -160,8 +158,6 @@ displayChangeArt.addEventListener('click', async() => {
             let formModif = document.createRange().createContextualFragment(formModifText);
 
             divFromModif.appendChild(formModif);
-
-            divFromModif.innerHTML = formModif;
         
             const fromModif = document.getElementById(modif.name);
 
@@ -172,7 +168,7 @@ displayChangeArt.addEventListener('click', async() => {
                 const formModifData = new FormData(fromModif);
 
                 const responseForm = await fetch('back.php?ifModifArt=1&idArt=' + modif.name , {method: "POST", body: formModifData});
-                const message = await responseForm.text();
+                await responseForm.text();
 
                 displayArt();
 
@@ -187,9 +183,9 @@ displayChangeArt.addEventListener('click', async() => {
         supprArt.addEventListener('click', async() => {
 
             const response = await fetch('back.php?deleteArt=1&idArt=' + supprArt.name);
-            const retour = await response.text();
+            await response.text();
 
-            displayArt();
+            supprArt.parentNode.parentNode.removeChild(supprArt.parentNode);
 
         })
     }
@@ -222,8 +218,6 @@ displayChangeCat.addEventListener('click', async() => {
         
             const fromMod = document.getElementById(modif.name);
 
-            console.log(fromMod);
-
             fromMod.addEventListener('submit', async(e) => {
 
                 e.preventDefault();
@@ -231,9 +225,7 @@ displayChangeCat.addEventListener('click', async() => {
                 const formModifData = new FormData(fromMod);
 
                 const responseForm = await fetch('back.php?ifModifCat=1&idCat=' + modif.name , {method: "POST", body: formModifData});
-                const message = await responseForm.text();
-
-                console.log(message);
+                await responseForm.text();
 
                 displayCat();
 
@@ -248,11 +240,9 @@ displayChangeCat.addEventListener('click', async() => {
         supprCat.addEventListener('click', async() => {
 
             const response = await fetch('back.php?deleteCat=1&idCat=' + supprCat.name);
-            const retour = await response.text();
+            await response.text();
 
-            console.log(retour)
-
-            displayCat();
+            supprCat.parentNode.parentNode.removeChild(supprCat.parentNode);
 
         })
     }
@@ -266,15 +256,8 @@ displayChangeCat.addEventListener('click', async() => {
         const formAddCatData = new FormData(addCatForm);
 
         const responseAddCat = await fetch('back.php?createCat=1', {method: "POST", body: formAddCatData});
-        const message = await responseAddCat.text();
-
-        console.log(message);
+        await responseAddCat.text();
 
         displayCat();
-
-
-
     })
-
-
 })

@@ -76,7 +76,7 @@
 
     foreach ($tabUsers as $user) : ?>
 
-        <br><div class="uneLigne">
+        <div class="uneLigne">
 
         <p><?php echo $user['login'] ?></p>
 
@@ -106,7 +106,7 @@
         
         <?php endif; ?>
 
-        <button class="suppr" id="supprUser<?php echo $user['id'] ?>" name="<?php echo $user['id'] ?>">Delete user</button> <br>
+        <button class="suppr" id="supprUser<?php echo $user['id'] ?>" name="<?php echo $user['id'] ?>">Delete user</button>
 
         </div>
 
@@ -167,7 +167,7 @@
 
         <div id="divCom<?php echo $temp; $temp++ ?>">
 
-            <br><div class="uneLigne">
+            <div class="uneLigne">
 
                 <p>Date : <?php echo $comm['date_creation'] ?></p>
                 <p>Auteur : <?php echo $comm['login'] ?></p>
@@ -177,10 +177,10 @@
 
             <p>Contenu : <?php echo $comm['contenu'] ?></p>
 
-        </div>
+            <button class="modif" name="<?php echo $comm['id'] ?>">Mofify comment</button>
+            <button class="suppr" name="<?php echo $comm['id'] ?>">Delete comment</button>
 
-        <button class="modif" name="<?php echo $comm['id'] ?>">Mofify comment</button>
-        <button class="suppr" name="<?php echo $comm['id'] ?>">Delete comment</button><br>
+        </div>
         
     <?php endforeach; 
 } ?>
@@ -240,7 +240,7 @@
 
         <div id="divArt<?php echo $temp; $temp++ ?>">
 
-            <br><h4><?php echo $article['titre'] ?></h4>
+            <h4><?php echo $article['titre'] ?></h4>
             <p><?php echo $article['nom'] ?></p>
             
             <div class="uneLigne">
@@ -253,10 +253,10 @@
             <p>Contenu :</p>
             <p><?php echo $article['contenu'] ?></p>
 
-        </div>
+            <button class="modif" name="<?php echo $article['id'] ?>">Mofify article</button>
+            <button class="suppr" name="<?php echo $article['id'] ?>">Delete article</button>
 
-        <button class="modif" name="<?php echo $article['id'] ?>">Mofify article</button>
-        <button class="suppr" name="<?php echo $article['id'] ?>">Delete article</button><br>
+        </div>
 
     <?php endforeach;
 
@@ -394,7 +394,7 @@
     $req = $conn->prepare($sql);
     $req->execute(array(':id' => $_GET['idCat']));
 
-    echo "le categorie est supprimé";
+    echo "la categorie est supprimée";
 
 } ?>
 
