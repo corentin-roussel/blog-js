@@ -21,7 +21,7 @@
 
 
     <main class="page-body">
-        <?php if($_SESSION['user']['articles'] == 1) { ?>
+        <?php if(isset ($_SESSION['user']['articles']) && $_SESSION['user']['articles'] == 1) { ?>
         <div class="create-article">
             <a class="link" href="creation-article.php">Create an article</a>
         </div>

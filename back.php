@@ -460,61 +460,47 @@
 
     if(isset($_GET['displayArt'])) {
 
-        echo 'oki';
-
         if(isset($_GET['numPage'])) {
             $numPage = $_GET['numPage'];
-            echo 'ok1';
         }
 
         if(isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
 
             $article->getArticlesListe($_POST['nbArticles'], $numPage, $_POST['listeCategorie']);
-            echo 'ok2';
 
         }elseif (isset($_POST['nbArticles']) && !isset($_POST['listeCategorie'])) {
 
             $article->getArticlesListe($_POST['nbArticles'], $numPage, "");
-            echo 'ok3';
 
         }elseif (!isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
 
             $article->getArticlesListe(5, $numPage, $_POST['listeCategorie']);
-            echo 'ok4';
 
         }else{
             $article->getArticlesListe(5, $numPage, "");
-            echo 'ok5';
         }
 
     }
 
     if(isset($_GET['displayPagination'])) {
 
-        echo 'oke';
-
         if(isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
 
             $article->pagination($_POST['nbArticles'], $_POST['listeCategorie']);
-            echo 'ok6';
 
         }elseif (!isset($_POST['nbArticles']) && isset($_POST['listeCategorie'])) {
             
             $article->pagination(5, $_POST['listeCategorie']);
-            echo 'ok7';
 
         }elseif (isset($_POST['nbArticles']) && !isset($_POST['listeCategorie'])) {
             
             $article->pagination($_POST['nbArticles'], "");
-            echo 'ok8';
 
         }else{
 
             $article->pagination(5, "");
-            echo 'ok9';
 
         }
-
     }
 
 ?>
