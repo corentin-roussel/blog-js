@@ -2,11 +2,11 @@
 ?>
 
 <form action="" method="POST" id="formComm">
-    <label for="comment">Commentaires</label>
-    <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+    <label class="form-label" for="comment">Comment : </label>
+    <textarea class="space" name="comment" id="comment" cols="30" rows="5"></textarea>
     <div id="errorComm" class="error"></div>
 
-    <input type="submit" name="submitComm" id="submitComm" value="Commenter">
+    <input class="button-form" type="submit" name="submitComm" id="submitComm" value="Comment">
 </form>
 
 

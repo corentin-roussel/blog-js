@@ -94,6 +94,7 @@ class Comment
         ]);
         $comm = $req->fetchAll(PDO::FETCH_ASSOC);
 
+
         $json = json_encode($comm, JSON_PRETTY_PRINT);
 
         echo $json;

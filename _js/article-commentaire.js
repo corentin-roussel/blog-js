@@ -1,9 +1,7 @@
-let comment_place = document.querySelector("#place")
-let comment_form = document.querySelector("#formComm")
+let comment_place = document.querySelector("#place");
 let displayComment = document.querySelector("#displayComment");
 
 
-console.log(window.location.search);
 
 const fetchFormComm = async () => {
     const response = await fetch("commentaire.php")
@@ -30,14 +28,15 @@ const insertComm = async (form, e) => {
 
 const displayErrorComm = (dataJSON) => {
 
-    let comm_error = document.querySelector("#errorComm")
+    let comm_error = document.querySelector("#errorComm");
+    comm_error.innerHTML = "";
 
-    const errorComments = document.createElement("small")
-    comm_error.appendChild(errorComments)
+    const errorComments = document.createElement("small");
+    comm_error.appendChild(errorComments);
 
     if(dataJSON['errorComment']) {
-        const commentProblem = document.createElement("div")
-        commentProblem.innerHTML = dataJSON['errorComment']
+        const commentProblem = document.createElement("div");
+        commentProblem.innerHTML = dataJSON['errorComment'];
         errorComments.appendChild(commentProblem);
 
     }
@@ -46,12 +45,11 @@ const displayErrorComm = (dataJSON) => {
     }
 }
 
-const buttonComm = document.querySelector("#switchComment")
-console.log(buttonComm)
 
 window.addEventListener("load", async () => {
     formComm = await fetchFormComm();
     displayFormComm(formComm);
+    displayComm();
     const commentForm = document.querySelector("#formComm")
     let comment = document.querySelector("#comment");
 
@@ -59,28 +57,48 @@ window.addEventListener("load", async () => {
     commentForm.addEventListener("submit", (e) => {
         insertComm(commentForm, e);
         displayComm();
+        comment.value = ""
     })
 })
 
 
-window.addEventListener("load", () => {
+const formatDate = (date) => {
+    let mySQLDate = date
+    let jsDate = new Date(date);
+    let day = jsDate.getDate()
+    let month = jsDate.getMonth()
+    let year = jsDate.getFullYear()
 
-    displayComm();
-})
+    let hour = jsDate.getHours()
+    let minutes = jsDate.getMinutes()
+    let seconds = jsDate.getSeconds()
 
+    return displayDate(day) + "-" + displayDate(month) + "-" + year + " a " + displayDate(hour) + ":" + displayDate(minutes) + ":" + displayDate(seconds)
+}
+const displayDate = (date) => {
+    return (date < 10) ? '0' + date : date
+}
 
 const comment = (reponse) => {
     displayComment.innerHTML = "";
 
     for(let comm of reponse)
     {
+        const dateFormat = formatDate(comm.date_creation)
+
         let title = document.createElement("h3")
-        title.innerHTML = "Fait par " + comm.login + " le " + comm.date_creation
+        title.innerHTML = "Fait par " + comm.login + " le " + dateFormat ;
+        title.setAttribute("class", "title-comment")
         displayComment.append(title)
 
         let contenu = document.createElement("p")
-        contenu.innerHTML = comm.contenu
+        contenu.innerHTML = comm.contenu;
+        contenu.setAttribute("class", "para-comment")
         displayComment.append(contenu)
+
+        let br = document.createElement("hr")
+        br.setAttribute("class", "br-comment")
+        displayComment.append(br)
     }
 }
 

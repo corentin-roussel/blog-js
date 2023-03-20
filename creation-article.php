@@ -1,21 +1,22 @@
-<?php if (session_status() == PHP_SESSION_NONE){ session_start();} ?>
+<?php
+if (session_status() == PHP_SESSION_NONE){ session_start();} ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php require_once '_include/head.php' ?>
-    <script src="creation-article.js" defer></script>
+    <script src="_js/creation-article.js" defer></script>
     <title>Document</title>
 </head>
-<body>
+<body class="wrapper">
 
 
-    <?php require_once 'Article.php' ?>
+    <?php require_once '_Class/Article.php' ?>
 
-    <header>
+    <header class="page-header">
         <?php require_once '_include/header.php' ?>
     </header>
 
-    <main>
+    <main class="page-body">
 
         <div class="creation-container">
 
@@ -72,7 +73,7 @@
 
     </main>
 
-    <footer>
+    <footer class="page-footer">
         <?php require_once '_include/footer.php' ?>
     </footer>
     

@@ -5,7 +5,7 @@ class User
 {
     private ?int $id;
     public ?string $login;
-    public ?PDO $conn;
+    private ?PDO $conn;
 
     public function __construct() {
 
@@ -89,7 +89,7 @@ class User
 
         $messages = [];
 
-        $sql = "SELECT * FROM utilisateurs WHERE login=:login";
+        $sql = "SELECT *,utilisateurs.id FROM utilisateurs INNER JOIN roles ON utilisateurs.id_roles = roles.id WHERE login=:login";
         
         $req = $this->conn->prepare($sql);
         $req->execute(array(':login' => $login));
@@ -100,14 +100,15 @@ class User
             $tab = $req->fetch(PDO::FETCH_ASSOC);
             $dataPass = $tab['password'];
             $id = $tab['id'];
-            $id_roles = $tab['id_roles'];
+            $id_roles = $tab['droits'];
+            $utilisateurs = $tab['utilisateurs'];
+            $commentaires = $tab['commentaires'];
+            $articles = $tab['articles'];
+            $categories = $tab['categories'];
 
             if(password_verify($password,$dataPass)){
 
-                $_SESSION['user'] = array("id" => $id, "login" => $login, "password" => $dataPass, "roles" => $id_roles);
-//                $_SESSION['login'] = $login;
-//                $_SESSION['password'] = $dataPass;
-//                $_SESSION['id_roles'] = $id_roles;
+                $_SESSION['user'] = array("id" => $id, "login" => $login, "password" => $dataPass, "roles" => $id_roles, "utilisateurs" =>$utilisateurs, "commentaires" => $commentaires, "articles" => $articles, "categories" => $categories);
 
                 $messages['okConn'] = 'You\'re connected';
 
@@ -209,7 +210,7 @@ class User
     public static function Disconnect() {
 
         session_destroy();
-        exit('Vous avez bien été deconnecté');
+        exit('You\'ve been disconnected');
 
     }
 
@@ -270,24 +271,7 @@ class User
     }
 
 
-    //A déplacer dans la class article
-    public function getLastArticles() {
 
-        $req = $this->conn->prepare("SELECT *, SUBSTRING(contenu, 1,50) AS 'short_contenu'  FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON articles.id_categorie = categories.id ORDER BY articles.id DESC LIMIT 5");
-        $req->execute();
-        $article = $req->fetchAll(PDO::FETCH_ASSOC);
-
-
-        foreach($article as $key => $values) {
-            echo "<section class='article-place'>
-                    <h2 class='article-title'>$values[titre]</h2>
-                    <p class='article-text'><small>$values[nom]</small></p>
-                    <p class='article-text'>$values[short_contenu]...</p>
-                  </section>";
-        }
-
-
-    }
 
 }
 

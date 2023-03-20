@@ -10,8 +10,10 @@
         <?php
             if(isset($_SESSION['user'])) {
         ?>
+                <a class="footer-link" href="index.php">Home</a>
                 <a class="footer-link" href="profil.php">Profile</a>
-                <a class="footer-link" href="article.php">Article</a>
+                <a class="footer-link" href="articles-page.php">Article</a>
+                <a class="footer-link" href="deconnexion.php">Disconnect</a>
         <?php
             }else {
         ?>
