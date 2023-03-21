@@ -14,6 +14,8 @@ class Comment
 
     private ?int $id_article;
 
+    private ?int $id_commentaire;
+
     public ?PDO $conn;
 
     public function __construct()
@@ -87,6 +89,56 @@ class Comment
         die();
     }
 
+    public function insertRepComment(?string $contenu) {
+
+        $get = $_GET['article'];
+        $getInt = (int)$get;
+        $messages = [];
+        $okComment = false;
+        $dateCrea = date('Y-m-d H:i:s');
+        $this->setDateCrea($dateCrea);
+        $this->setDateModif($dateCrea);
+        $this->setIdUser($_SESSION['user']['id']);
+        $this->setIdArticle($getInt);
+        $this->setIdComment($_POST['id']);
+
+
+        $checkComment = $this->checkComment($contenu);
+
+
+
+        if($checkComment == "ok comment")
+        {
+
+            $this->setContenu($contenu);
+
+            $messages['successComment'] = 'ok';
+
+            $okComment = true;
+        }else {
+            $messages['errorComment'] = $checkComment;
+        }
+
+        if($okComment === true)
+        {
+            $req = $this->conn->prepare("INSERT INTO `reponse_commentaires`(id_utilisateur, contenu, date_creation, date_modification, id_article, id_commentaire) VALUES (:id_utilisateur,:contenu,:date_creation,:date_modification,:id_article, :id_commentaire)");
+            $req->execute(array(
+                ":id_utilisateur" => $this->id_utilisateur,
+                ":contenu" => $this->contenu,
+                ":date_creation" => $this->date_creation,
+                ":date_modification" => $this->date_modification,
+                ":id_article" => $this->id_article,
+                ":id_commentaire" => $this->id_commentaire
+            ));
+            $messages['success'] = "Comment is posted";
+        }
+
+        $json = json_encode($messages, JSON_PRETTY_PRINT);
+        echo $json;
+
+        die();
+    }
+
     public function getCommentaires() {
         $req = $this->conn->prepare("SELECT *, commentaires.id FROM commentaires INNER JOIN utilisateurs ON utilisateurs.id = commentaires.id_utilisateur WHERE commentaires.id_article = :id_article");
          $req->execute([
@@ -143,14 +195,19 @@ class Comment
         $this->date_creation = $date_creation;
     }
 
-    public function setDateModif(?string $date_modification)
+    public function setDateModif(?string $date_modification): void
     {
         $this->date_modification = $date_modification;
     }
 
-    public function setIdArticle(?int $id_article)
+    public function setIdArticle(?int $id_article): void
     {
         $this->id_article = $id_article;
+    }
+
+    public function setIdComment(?int $id_commentaire): void
+    {
+        $this->id_commentaire = $id_commentaire;
     }
     //*************** GETTERS ***************//
 
@@ -183,5 +240,10 @@ class Comment
     public function getIdArticle()
     {
         return $this->id_article;
+    }
+
+    public function getIdCommentaire()
+    {
+        return $this->id_commentaire;
     }
 }

@@ -20,6 +20,10 @@ if(isset($_GET['commentaires'])) {
     $comment->insertComment($_POST['comment']);
 }
 
+if(isset($_GET['rep_comm'])) {
+    $comment->insertRepComment($_POST['rep-comment']);
+}
+
 
 
 ?>
@@ -29,6 +33,7 @@ if(isset($_GET['commentaires'])) {
 <head>
     <?php require_once ('_include/head.php') ?>
     <script defer src="_js/article-commentaire.js"></script>
+    <script defer src="_js/reponse_commentaires.js"></script>
     <title>Article</title>
 </head>
 <body class="wrapper">
