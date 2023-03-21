@@ -466,6 +466,15 @@ html, body {
     margin-bottom: 1rem;
 }
 
+.likeNumIcon {
+    padding-top: 5%;
+}
+
+#displayNum, #likesDisplay {
+    font-size: larger;
+    padding: 1%;
+}
+
 
 /*********************************PAGE COMMENTAIRE*********************************/
 
@@ -504,7 +513,7 @@ html, body {
 
 
 /*********************************ADMIN*********************************/
-.uneLigneUser {
+.uneLigne {
     display: flex;
 
 }

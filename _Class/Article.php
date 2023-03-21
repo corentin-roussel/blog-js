@@ -309,9 +309,11 @@ class Article
                 <h2 class='article-title'>$article[titre]</h2>
                 <p class='article-text'><small>$article[nom]</small></p>
                 <p class='article-text'>$article[contenu].</p>
-              </section>
-              <div id='displayNum'></div>
-              <div id='likesDisplay'></div>";
+                <div class='uneLigne likeNumIcon'>
+                    <div id='displayNum'></div>
+                    <div id='likesDisplay'></div>
+                </div>
+              </section>";
 
 
     }
