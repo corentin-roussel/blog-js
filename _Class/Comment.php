@@ -93,6 +93,8 @@ class Comment
 
         $get = $_GET['article'];
         $getInt = (int)$get;
+        $getRep = $_GET['insert_rep'];
+        $getRepInt = (int)$getRep;
         $messages = [];
         $okComment = false;
         $dateCrea = date('Y-m-d H:i:s');
@@ -100,7 +102,7 @@ class Comment
         $this->setDateModif($dateCrea);
         $this->setIdUser($_SESSION['user']['id']);
         $this->setIdArticle($getInt);
-        $this->setIdComment($_POST['id']);
+        $this->setIdComment($getRepInt);
 
 
         $checkComment = $this->checkComment($contenu);
@@ -116,7 +118,7 @@ class Comment
 
             $okComment = true;
         }else {
-            $messages['errorComment'] = $checkComment;
+            $messages['errorRepComment'] = $checkComment;
         }
 
         if($okComment === true)
@@ -148,6 +150,24 @@ class Comment
 
 
         $json = json_encode($comm, JSON_PRETTY_PRINT);
+
+        echo $json;
+
+        die();
+    }
+
+    public function getRepCommentaire() {
+        $this->setIdArticle($_GET['article']);
+        $this->setIdComment($_GET['response_comm']);
+
+        $req = $this->conn->prepare("SELECT *, reponse_commentaires.id FROM reponse_commentaires INNER JOIN utilisateurs ON utilisateurs.id = reponse_commentaires.id_utilisateur WHERE reponse_commentaires.id_commentaire = :id_commentaire AND reponse_commentaires.id_article = :id_article ");
+        $req->execute(array(
+            ":id_commentaire" => $this->id_commentaire,
+            "id_article" => $this->id_article
+        ));
+        $rep_comm = $req->fetchAll(PDO::FETCH_ASSOC);
+
+        $json = json_encode($rep_comm, JSON_PRETTY_PRINT);
 
         echo $json;
 

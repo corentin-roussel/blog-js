@@ -3,7 +3,7 @@ let displayComment = document.querySelector("#displayComment");
 let repComment
 let submitForm
 
-
+/********************************* Fetch/DisplayForm *********************************/
 
 const fetchFormComm = async () => {
     const response = await fetch("commentaire.php?post_comm=ok")
@@ -25,6 +25,8 @@ const displayForm = (place, form) => {
     place.innerHTML = form
 }
 
+/********************************* InsertComm *********************************/
+
 const insertComm = async (form, e) => {
 
     e.preventDefault();
@@ -41,24 +43,42 @@ const insertRepComm = async (buttonId ,form,e) => {
     e.preventDefault();
     let formRepComment = new FormData(form)
 
-    const response = await fetch("article-commentaire.php" + window.location.search + "&rep-comm=" + buttonId , {body: formRepComment, method: "POST"})
+    const response = await fetch("article-commentaire.php" + window.location.search + "&insert_rep=" + buttonId , {body: formRepComment, method: "POST"})
     const dataJSON = await response.json()
 
-    displayErrorComm(dataJSON)
+    displayErrorRepComm(dataJSON)
 }
+
+/********************************* ErrorComm *********************************/
 
 const displayErrorComm = (dataJSON) => {
 
     let comm_error = document.querySelector("#errorComm");
     comm_error.innerHTML = "";
 
+
     const errorComments = document.createElement("small");
     comm_error.appendChild(errorComments);
 
     if(dataJSON['errorComment']) {
-        const commentProblem = document.createElement("div");
-        commentProblem.innerHTML = dataJSON['errorComment'];
-        errorComments.appendChild(commentProblem);
+        errorComments.innerHTML = dataJSON['errorComment'];
+
+    }
+    if(dataJSON['success']) {
+        alert(dataJSON['success']);
+    }
+}
+
+const displayErrorRepComm = (dataJSON) => {
+
+    let comm_rep_error = document.querySelector("#errorRep");
+    comm_rep_error.innerHTML = "";
+
+    const errorComments = document.createElement("small");
+    comm_rep_error.appendChild(errorComments);
+
+    if(dataJSON['errorRepComment']) {
+        errorComments.innerHTML = dataJSON['errorRepComment'];
 
     }
     if(dataJSON['success']) {
@@ -67,47 +87,8 @@ const displayErrorComm = (dataJSON) => {
 }
 
 
-window.addEventListener("load", async () => {
-    formComm = await fetchFormComm();
-    displayForm(comment_place ,formComm);
-    await displayComm();
-    const commentForm = document.querySelector("#formComm")
-    let comment = document.querySelector("#comment");
-    repComment = document.querySelectorAll(".buttonRep")
 
-    console.log(repComment)
-
-
-
-    commentForm.addEventListener("submit", (e) => {
-        insertComm(commentForm, e);
-        displayComm();
-        comment.value = ""
-    })
-
-    for(let i = 0; i < repComment.length ; i++)
-    {
-        repComment[i].addEventListener("click", async() => {
-            formRep = await fetchFormRep()
-            displayForm(repComment[i].nextSibling, formRep)
-            submitRep = document.querySelectorAll("#submitRep")
-            submitForm = document.querySelector("#formRep")
-
-
-
-            for(let buttonSubmitRep = 0; buttonSubmitRep < submitForm.length; buttonSubmitRep++)
-            {
-                submitForm[buttonSubmitRep].addEventListener("submit", async (e) => {
-                    await insertRepComm(repComment[i].id, submitForm, e)
-                })
-            }
-        })
-    }
-
-
-})
-
-
+/********************************* displayComm *********************************/
 
 const formatDate = (date) => {
     let mySQLDate = date
@@ -120,7 +101,7 @@ const formatDate = (date) => {
     let minutes = jsDate.getMinutes()
     let seconds = jsDate.getSeconds()
 
-    return displayDate(day) + "-" + displayDate(month) + "-" + year + " a " + displayDate(hour) + ":" + displayDate(minutes) + ":" + displayDate(seconds)
+    return displayDate(day) + "-" + displayDate(month) + "-" + year + " at " + displayDate(hour) + ":" + displayDate(minutes) + ":" + displayDate(seconds)
 }
 const displayDate = (date) => {
     return (date < 10) ? '0' + date : date
@@ -138,7 +119,7 @@ const comment = (reponse) => {
         displayComment.append(comment)
 
         let title = document.createElement("h3")
-        title.innerHTML = "Poster par " + comm.login
+        title.innerHTML = "Posted by " + comm.login
         title.setAttribute("class", "title-comment")
         comment.append(title)
 
@@ -148,7 +129,7 @@ const comment = (reponse) => {
         comment.append(contenu)
 
         let date = document.createElement("h6")
-        date.innerHTML = "Poster le " + dateFormat
+        date.innerHTML = "Posted the " + dateFormat
         comment.append(date)
 
         let buttonRep = document.createElement("button")
@@ -168,6 +149,36 @@ const comment = (reponse) => {
     }
 }
 
+const responseComment = (reponse) => {
+    for(let comm of reponse)
+    {
+        const dateFormat = formatDate(comm.date_creation)
+
+        let comment = document.createElement("div")
+        comment.setAttribute("class", "rep-comment")
+        displayComment.append(comment)
+
+        let title = document.createElement("h3")
+        title.innerHTML = "Posted by " + comm.login
+        title.setAttribute("class", "title-rep-comment")
+        comment.append(title)
+
+        let contenu = document.createElement("p")
+        contenu.innerHTML = comm.contenu;
+        contenu.setAttribute("class", "para-rep-comment")
+        comment.append(contenu)
+
+        let date = document.createElement("h6")
+        date.innerHTML = "Posted the " + dateFormat
+        comment.append(date)
+
+        let br = document.createElement("hr")
+        br.setAttribute("class", "br-comment")
+        comment.append(br)
+
+    }
+}
+
 
 const displayComm = async() => {
     const response = await fetch("article-commentaire.php"+ window.location.search +"&commentaire=display")
@@ -175,3 +186,53 @@ const displayComm = async() => {
     comment(json)
 
 }
+
+const displayRepComm = async(buttonId) => {
+    const response = await fetch("article-commentaire.php"+window.location.search + "&response_comm=" +buttonId)
+    const json = await response.json()
+    responseComment(json);
+}
+
+/********************************* displayComm *********************************/
+window.addEventListener("load", async () => {
+    formComm = await fetchFormComm();
+    displayForm(comment_place ,formComm);
+    await displayComm();
+    const commentForm = document.querySelector("#formComm")
+    let comment = document.querySelector("#comment");
+    repComment = document.querySelectorAll(".buttonRep")
+    let div_rep = document.querySelectorAll(".formRep")
+    console.log(div_rep)
+
+    console.log(repComment)
+
+
+
+    commentForm.addEventListener("submit", (e) => {
+        insertComm(commentForm, e);
+        displayComm();
+        comment.value = ""
+    })
+
+    for(let i = 0; i < repComment.length ; i++)
+    {
+        repComment[i].addEventListener("click", async() => {
+            for(let j = 0; j < div_rep.length; j++)
+            {
+                div_rep[j].innerHTML = ""
+            }
+            formRep = await fetchFormRep()
+            displayForm(repComment[i].nextSibling, formRep)
+            console.log(div_rep)
+            submitForm = document.querySelector("#formSubmitRep")
+            let id_repComm =repComment[i].id
+
+
+            submitForm.addEventListener("submit",  (e) => {
+                insertRepComm(id_repComm , submitForm, e)
+                displayRepComm(id_repComm);
+            })
+            await displayRepComm(id_repComm);
+        })
+    }
+})
