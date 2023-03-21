@@ -73,15 +73,15 @@ const isLiked = async() => {
 
 const displayLikes = async() => {
 
-    const divLikes = document.getElementById('likesDisplay');
+    const divNum = document.getElementById('displayNum');
     const likeNumString = await likesCountArticle();
 
     const likeNum = document.createRange().createContextualFragment(likeNumString);
-    divLikes.appendChild(likeNum);
+    divNum.appendChild(likeNum);
 
 }
 
-const displayHeart = async() => {
+const displayHeartIcon = async() => {
     
     const divLikes = document.getElementById('likesDisplay');
     const isLikedResult = await isLiked();
@@ -138,18 +138,29 @@ window.addEventListener("load", async () => {
     
 
     await displayLikes();
-    await displayHeart();
+    await displayHeartIcon();
     const divLikes = document.getElementById('likesDisplay');
-
+    const divNum = document.getElementById('displayNum');
     const heartIcon = document.getElementById('heartIcon');
     
     heartIcon.addEventListener('click', async() => {
 
-        await ifClickLike();
+        divNum.innerHTML = "";
+        
+        const isLikedResult = await isLiked();
 
-        divLikes.innerHTML = "";
+        await ifClickLike();
         await displayLikes();
-        await displayHeart();
+
+        if(isLikedResult == 1){
+
+            heartIcon.className = "fa-regular fa-heart";
+
+        }else{
+
+            heartIcon.className = "fa-solid fa-heart";
+
+        }
 
     })
 
