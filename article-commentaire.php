@@ -8,6 +8,9 @@
     $article = new Article();
     $comment = new Comment();
 
+    if(isset($_GET['commentaires'])) {
+        $comment->insertComment($_POST['comment']);
+    }
 
     if(isset($_GET['commentaire']))
     {
@@ -16,12 +19,14 @@
 
 
 
-if(isset($_GET['commentaires'])) {
-    $comment->insertComment($_POST['comment']);
-}
 
+    if(isset($_GET['insert_rep'])) {
+        $comment->insertRepComment($_POST['rep-comment']);
+    }
 
-
+    if(isset($_GET['response_comm'])) {
+        $comment->getRepCommentaire();
+    }
 ?>
 
 <!doctype html>
@@ -29,6 +34,7 @@ if(isset($_GET['commentaires'])) {
 <head>
     <?php require_once ('_include/head.php') ?>
     <script defer src="_js/article-commentaire.js"></script>
+    <script defer src="_js/reponse_commentaires.js"></script>
     <script src="https://kit.fontawesome.com/1241fb6252.js" crossorigin="anonymous"></script>
     <title>Article</title>
 </head>
