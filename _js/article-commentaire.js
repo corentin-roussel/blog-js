@@ -87,6 +87,8 @@ const displayErrorRepComm = (dataJSON) => {
         alert(dataJSON['success']);
     }
 
+}
+
 /********************************* Likes *********************************/
 
 
