@@ -68,25 +68,93 @@ const displayErrorComm = (dataJSON) => {
     if(dataJSON['success']) {
         alert(dataJSON['success']);
     }
+    
 }
 
 const displayErrorRepComm = (dataJSON) => {
 
+
     let comm_rep_error = document.querySelector("#errorRep");
     comm_rep_error.innerHTML = "";
-
+  
     const errorComments = document.createElement("small");
     comm_rep_error.appendChild(errorComments);
-
+  
     if(dataJSON['errorRepComment']) {
         errorComments.innerHTML = dataJSON['errorRepComment'];
-
-    }
+      }
     if(dataJSON['success']) {
         alert(dataJSON['success']);
     }
+
+/********************************* Likes *********************************/
+
+
+const likesCountArticle = async() => {
+
+    const articleId = window.location.search.split('=')[1];
+
+    const response = await fetch('back.php?likeCount=1&idArticle=' + articleId);
+    const numLike = await response.text();
+
+    return numLike.trim();
+
 }
 
+const isLiked = async() => {
+
+    const articleId = window.location.search.split('=')[1];
+
+    const response = await fetch('back.php?isLiked=1&idArticle=' + articleId);
+    const isLiked = await response.text();
+
+    return isLiked.trim();
+
+}
+
+const displayLikes = async() => {
+
+    const divNum = document.getElementById('displayNum');
+    const likeNumString = await likesCountArticle();
+
+    const likeNum = document.createRange().createContextualFragment(likeNumString);
+    divNum.appendChild(likeNum);
+
+}
+
+const displayHeartIcon = async() => {
+    
+    const divLikes = document.getElementById('likesDisplay');
+    const isLikedResult = await isLiked();
+
+    if(isLikedResult == 1){
+
+        const likeIcon = document.createRange().createContextualFragment('<i class="fa-solid fa-heart" id="heartIcon"></i>');
+        divLikes.appendChild(likeIcon);
+
+    }else if(isLikedResult == 0){
+
+        const likeIcon = document.createRange().createContextualFragment('<i class="fa-regular fa-heart" id="heartIcon"></i>');
+        divLikes.appendChild(likeIcon);
+    }
+}
+
+const ifClickLike = async() => {
+    
+    const isLikedResult = await isLiked();
+    const articleId = window.location.search.split('=')[1];
+    
+
+    if(isLikedResult == 1){
+
+        await fetch('back.php?unlike=1&articleId=' + articleId);
+
+    }else{
+
+        await fetch('back.php?like=1&articleId=' + articleId);
+
+    }
+}
 
 
 /********************************* displayComm *********************************/
@@ -213,6 +281,33 @@ window.addEventListener("load", async () => {
         displayComm();
         comment.value = ""
     })
+  
+    await displayLikes();
+    await displayHeartIcon();
+    const divLikes = document.getElementById('likesDisplay');
+    const divNum = document.getElementById('displayNum');
+    const heartIcon = document.getElementById('heartIcon');
+    
+    heartIcon.addEventListener('click', async() => {
+
+        divNum.innerHTML = "";
+        
+        const isLikedResult = await isLiked();
+
+        await ifClickLike();
+        await displayLikes();
+
+        if(isLikedResult == 1){
+
+            heartIcon.className = "fa-regular fa-heart";
+
+        }else{
+
+            heartIcon.className = "fa-solid fa-heart";
+
+        }
+
+    })
 
     for(let i = 0; i < repComment.length ; i++)
     {
@@ -229,7 +324,6 @@ window.addEventListener("load", async () => {
             }
             formRep = await fetchFormRep()
             displayForm(repComment[i].nextSibling, formRep)
-            // displayRep = await
             await displayRepComm(id_repComm, repComment[i].nextSibling.nextSibling)
             submitForm = document.querySelector("#formSubmitRep")
 

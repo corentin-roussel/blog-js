@@ -35,6 +35,7 @@
     <?php require_once ('_include/head.php') ?>
     <script defer src="_js/article-commentaire.js"></script>
     <script defer src="_js/reponse_commentaires.js"></script>
+    <script src="https://kit.fontawesome.com/1241fb6252.js" crossorigin="anonymous"></script>
     <title>Article</title>
 </head>
 <body class="wrapper">

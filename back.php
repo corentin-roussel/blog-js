@@ -412,24 +412,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <?php
 
     $user = new User();
@@ -504,3 +486,54 @@
     }
 
 ?>
+
+
+
+
+<?php if(isset($_GET['likeCount'])) {
+
+    $sql = "SELECT * FROM likes WHERE id_article = :id";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':id' => $_GET['idArticle']));
+    $count = $req->rowCount();
+
+    echo $count;
+
+} ?>
+
+<?php if(isset($_GET['isLiked'])) {
+
+    $sql = "SELECT * FROM likes WHERE id_article = :article AND id_utilisateur = :user";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':article' => $_GET['idArticle'],
+                        ':user' => $_SESSION['user']['id']
+    ));
+    $count = $req->rowCount();
+
+    if($count > 0) {
+        echo 1;
+    }else{
+        echo 0;
+    }
+
+} ?>
+
+<?php if(isset($_GET['unlike'])) {
+
+    $sql = "DELETE FROM likes WHERE id_article = :article AND id_utilisateur = :user";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':article' => $_GET['articleId'],
+                        ':user' => $_SESSION['user']['id']
+    ));
+
+} ?>
+
+<?php if(isset($_GET['like'])) {
+
+    $sql = "INSERT INTO likes (id_utilisateur, id_article) VALUES (:user, :article)";
+    $req = $conn->prepare($sql);
+    $req->execute(array(':article' => $_GET['articleId'],
+                        ':user' => $_SESSION['user']['id']
+    ));
+
+} ?>
