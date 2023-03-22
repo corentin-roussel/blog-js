@@ -62,6 +62,7 @@
 
 
 
+
 <?php if(isset($_GET['utilisateurs'])) {
 
     $sqlUsers = "SELECT *, utilisateurs.id FROM utilisateurs INNER JOIN roles ON utilisateurs.id_roles = roles.id";
@@ -426,6 +427,18 @@
 
         $user->Connect($_POST['login'], $_POST['password']);
 
+    }
+
+    if(isset($_GET['setPicture'])) {
+    
+        $user->setPP('https://img2.freepng.fr/20180401/dbq/kisspng-user-profile-computer-icons-profile-5ac09245049c32.0935523415225697970189.jpg');
+    
+    }
+    
+    if(isset($_GET['getPicture'])) {
+
+        echo $user->getPP();
+    
     }
 
 ?>

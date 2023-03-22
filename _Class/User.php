@@ -270,9 +270,48 @@ class User
 
     }
 
+    public function setPP($URL) {
 
+        $chemin = new SplFileInfo($URL);
+        $format = $chemin->getExtension();
 
+        $sql = "INSERT INTO photos_profil (`id_utilisateur`, `image`, `format`) VALUES (:user , :photo , :format)";
+        $req = $this->conn->prepare($sql);
+        $req->execute(array(':user' => 1,
+                            ':photo' => file_get_contents($URL),
+                            ':format' => $format
+        ));
+    }
 
+    public function getPP() {
+
+        $sql = "SELECT `image` FROM photos_profil WHERE id_utilisateur = :user";
+        $req = $this->conn->prepare($sql);
+        $req->execute(array(':user' => 1));
+        $img = $req->fetchAll(PDO::FETCH_ASSOC);
+
+        return base64_encode($img[0]['image']);
+    }
+
+    public function getPPformat() {
+
+        $sql = "SELECT format FROM photos_profil WHERE id_utilisateur = :user";
+        $req = $this->conn->prepare($sql);
+        $req->execute(array(':user' => 1));
+        $img = $req->fetchAll(PDO::FETCH_ASSOC);
+
+        return $img[0]['format'];
+
+    }
+
+    public function unsetPP() {
+
+        $sql = "UPDATE photos_profil SET `image` = :photo WHERE id = :id";
+        $req = $this->conn->prepare($sql);
+        $req->execute(array(':photo' => "",
+                            ':id' => 1
+        ));
+    }
 }
 
 ?>
