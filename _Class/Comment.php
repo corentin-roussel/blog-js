@@ -157,13 +157,11 @@ class Comment
     }
 
     public function getRepCommentaire() {
-        $this->setIdArticle($_GET['article']);
         $this->setIdComment($_GET['response_comm']);
 
-        $req = $this->conn->prepare("SELECT *, reponse_commentaires.id FROM reponse_commentaires INNER JOIN utilisateurs ON utilisateurs.id = reponse_commentaires.id_utilisateur WHERE reponse_commentaires.id_commentaire = :id_commentaire AND reponse_commentaires.id_article = :id_article ");
+        $req = $this->conn->prepare("SELECT *, reponse_commentaires.id FROM reponse_commentaires INNER JOIN utilisateurs ON utilisateurs.id = reponse_commentaires.id_utilisateur WHERE reponse_commentaires.id_commentaire = :id_commentaire");
         $req->execute(array(
-            ":id_commentaire" => $this->id_commentaire,
-            "id_article" => $this->id_article
+            ":id_commentaire" => $this->id_commentaire
         ));
         $rep_comm = $req->fetchAll(PDO::FETCH_ASSOC);
 

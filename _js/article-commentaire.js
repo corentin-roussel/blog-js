@@ -1,5 +1,6 @@
 let comment_place = document.querySelector("#place");
 let displayComment = document.querySelector("#displayComment");
+let displayRep
 let repComment
 let submitForm
 
@@ -142,6 +143,10 @@ const comment = (reponse) => {
         place.setAttribute("class", "formRep")
         comment.append(place)
 
+        let repComment = document.createElement("div")
+        repComment.setAttribute("class", "rep-comm")
+        comment.append(repComment)
+
         let br = document.createElement("hr")
         br.setAttribute("class", "br-comment")
         comment.append(br)
@@ -149,14 +154,15 @@ const comment = (reponse) => {
     }
 }
 
-const responseComment = (reponse) => {
+const responseComment = (reponse, place) => {
+
     for(let comm of reponse)
     {
         const dateFormat = formatDate(comm.date_creation)
 
         let comment = document.createElement("div")
-        comment.setAttribute("class", "rep-comment")
-        displayComment.append(comment)
+        comment.setAttribute("class", "div-rep-comment")
+        place.append(comment)
 
         let title = document.createElement("h3")
         title.innerHTML = "Posted by " + comm.login
@@ -172,10 +178,6 @@ const responseComment = (reponse) => {
         date.innerHTML = "Posted the " + dateFormat
         comment.append(date)
 
-        let br = document.createElement("hr")
-        br.setAttribute("class", "br-comment")
-        comment.append(br)
-
     }
 }
 
@@ -187,10 +189,10 @@ const displayComm = async() => {
 
 }
 
-const displayRepComm = async(buttonId) => {
+const displayRepComm = async(buttonId, place) => {
     const response = await fetch("article-commentaire.php"+window.location.search + "&response_comm=" +buttonId)
     const json = await response.json()
-    responseComment(json);
+    responseComment(json, place);
 }
 
 /********************************* displayComm *********************************/
@@ -202,9 +204,7 @@ window.addEventListener("load", async () => {
     let comment = document.querySelector("#comment");
     repComment = document.querySelectorAll(".buttonRep")
     let div_rep = document.querySelectorAll(".formRep")
-    console.log(div_rep)
-
-    console.log(repComment)
+    let repComm;
 
 
 
@@ -217,22 +217,34 @@ window.addEventListener("load", async () => {
     for(let i = 0; i < repComment.length ; i++)
     {
         repComment[i].addEventListener("click", async() => {
+            let id_repComm =repComment[i].id
+            repComm = document.querySelectorAll(".rep-comm")
             for(let j = 0; j < div_rep.length; j++)
             {
                 div_rep[j].innerHTML = ""
             }
+            for(let x = 0; x < div_rep.length; x++)
+            {
+                repComm[x].innerHTML = ""
+            }
             formRep = await fetchFormRep()
             displayForm(repComment[i].nextSibling, formRep)
-            console.log(div_rep)
+            // displayRep = await
+            await displayRepComm(id_repComm, repComment[i].nextSibling.nextSibling)
             submitForm = document.querySelector("#formSubmitRep")
-            let id_repComm =repComment[i].id
+
+
 
 
             submitForm.addEventListener("submit",  (e) => {
+                for(let x = 0; x < div_rep.length; x++)
+                {
+                    repComm[x].innerHTML = ""
+                }
                 insertRepComm(id_repComm , submitForm, e)
-                displayRepComm(id_repComm);
+                displayRepComm(id_repComm, repComment[i].nextSibling.nextSibling);
             })
-            await displayRepComm(id_repComm);
+
         })
     }
 })

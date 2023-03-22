@@ -8,6 +8,9 @@
     $article = new Article();
     $comment = new Comment();
 
+    if(isset($_GET['commentaires'])) {
+        $comment->insertComment($_POST['comment']);
+    }
 
     if(isset($_GET['commentaire']))
     {
@@ -16,20 +19,14 @@
 
 
 
-if(isset($_GET['commentaires'])) {
-    $comment->insertComment($_POST['comment']);
-}
 
-if(isset($_GET['insert_rep'])) {
-    $comment->insertRepComment($_POST['rep-comment']);
-}
+    if(isset($_GET['insert_rep'])) {
+        $comment->insertRepComment($_POST['rep-comment']);
+    }
 
-if(isset($_GET['response_comm'])) {
-    $comment->getRepCommentaire();
-}
-
-
-
+    if(isset($_GET['response_comm'])) {
+        $comment->getRepCommentaire();
+    }
 ?>
 
 <!doctype html>
