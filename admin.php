@@ -30,23 +30,22 @@
 <head>
     <?php require_once '_include/head.php' ?>
     <script src="_js/admin.js" defer></script>
-    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
-<body>
+<body class="wrapper">
 
-    <header>
+    <header class="page-header">
         <?php require_once '_include/header.php' ?>
     </header>
 
-    <main>
+    <main class="page-body">
 
         <nav>
-            <ul>
-                <?php echo $tabUserRole[0]['utilisateurs'] == 1 ? "<li id='changeUser'>Users</li>" : "" ?>
-                <?php echo $tabUserRole[0]['commentaires'] == 1 ? "<li id='changeCom'>Comments</li>" : "" ?>
-                <?php echo $tabUserRole[0]['articles'] == 1 ? "<li id='changeArt'>Articles</li>" : "" ?>
-                <?php echo $tabUserRole[0]['categories'] == 1 ? "<li id='changeCat'>Categories</li>" : "" ?>
+            <ul class="admin-list">
+                <?php echo $tabUserRole[0]['utilisateurs'] == 1 ? "<li class='admin-link' id='changeUser'>Users</li>" : "" ?>
+                <?php echo $tabUserRole[0]['commentaires'] == 1 ? "<li class='admin-link' id='changeCom'>Comments</li>" : "" ?>
+                <?php echo $tabUserRole[0]['articles'] == 1 ? "<li class='admin-link' id='changeArt'>Articles</li>" : "" ?>
+                <?php echo $tabUserRole[0]['categories'] == 1 ? "<li class='admin-link' id='changeCat'>Categories</li>" : "" ?>
             </ul>
         </nav>
 
@@ -54,7 +53,7 @@
         
     </main>
 
-    <footer>
+    <footer class="page-footer">
         <?php require_once '_include/footer.php' ?>
     </footer>
     

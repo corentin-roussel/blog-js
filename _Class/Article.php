@@ -125,11 +125,11 @@ class Article
     public function getArticlesListe(?int $artParPage, ?int $numPage, ?string $categorie) {
 
         if($categorie) {
-            $sql = "SELECT *,articles.id, SUBSTRING(contenu, 1,50) AS 'short_contenu' FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON categories.id = articles.id_categorie WHERE nom = :categorie ORDER BY articles.date_creation DESC";
+            $sql = "SELECT *,articles.id, SUBSTRING(contenu, 1,100) AS 'short_contenu' FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON categories.id = articles.id_categorie WHERE nom = :categorie ORDER BY articles.date_creation DESC";
             $req = $this->conn->prepare($sql);
             $req->execute(array(':categorie' => $categorie));
         }else{
-            $sql = "SELECT *,articles.id, SUBSTRING(contenu, 1,50) AS 'short_contenu' FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON categories.id = articles.id_categorie ORDER BY articles.date_creation DESC";
+            $sql = "SELECT *,articles.id, SUBSTRING(contenu, 1,100) AS 'short_contenu' FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON categories.id = articles.id_categorie ORDER BY articles.date_creation DESC";
             $req = $this->conn->prepare($sql);
             $req->execute();
         }
@@ -142,10 +142,10 @@ class Article
 
             if(isset($tab[$j])) {
             
-                echo "<section class='article-place'>
-                        <a href='article-commentaire.php?article=" . $tab[$j]['id'] . "'><h2 class='article-title'>" . $tab[$j]['titre'] . "</h2></a>
-                        <p class='article-text'><small>" . $tab[$j]['nom'] . "</small></p>
-                        <p class='article-text'>" . $tab[$j]['short_contenu'] . "...</p>
+                echo "<section class='page-article-place'>
+                        <a class='link-article' href='article-commentaire.php?article=" . $tab[$j]['id'] . "'><h2 class='page-article-title'>" . $tab[$j]['titre'] . "</h2></a>
+                        <p class='page-article-text'><small>" . $tab[$j]['nom'] . "</small></p>
+                        <p class='page-article-text'>" . $tab[$j]['short_contenu'] . "...</p>
                         </section>"
                 ;
             }
@@ -280,7 +280,7 @@ class Article
 
     public function getShortArticles() {
 
-        $req = $this->conn->prepare("SELECT *, articles.id, SUBSTRING(contenu, 1,50) AS 'short_contenu'  FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON articles.id_categorie = categories.id ORDER BY articles.id DESC");
+        $req = $this->conn->prepare("SELECT *, articles.id, SUBSTRING(contenu, 1,100) AS 'short_contenu'  FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON articles.id_categorie = categories.id ORDER BY articles.id DESC");
         $req->execute();
         $article = $req->fetchAll(PDO::FETCH_ASSOC);
 
@@ -305,10 +305,10 @@ class Article
             ":id" => $_GET['article']
         ]);
         $article = $req->fetch(PDO::FETCH_ASSOC);
-        echo "<section class='article-place'>
-                <h2 class='article-title'>$article[titre]</h2>
-                <p class='article-text'><small>$article[nom]</small></p>
-                <p class='article-text'>$article[contenu].</p>
+        echo "<section class='one-article-place'>
+                <h2 class='one-article-title'>$article[titre]</h2>
+                <p class='one-article-small'><small>$article[nom]</small></p>
+                <p class='one-article-text'>$article[contenu].</p>
                 <div class='uneLigne likeNumIcon'>
                     <div id='displayNum'></div>
                     <div id='likesDisplay'></div>
@@ -320,7 +320,7 @@ class Article
 
     public function getLastArticles() {
 
-        $req = $this->conn->prepare("SELECT *,articles.id, SUBSTRING(contenu, 1,50) AS 'short_contenu'  FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON articles.id_categorie = categories.id ORDER BY articles.id DESC LIMIT 5");
+        $req = $this->conn->prepare("SELECT *,articles.id, SUBSTRING(contenu, 1,100) AS 'short_contenu'  FROM articles INNER JOIN utilisateurs ON utilisateurs.id = articles.id_utilisateur INNER JOIN categories ON articles.id_categorie = categories.id ORDER BY articles.id DESC LIMIT 5");
         $req->execute();
         $article = $req->fetchAll(PDO::FETCH_ASSOC);
 

@@ -76,7 +76,7 @@
 
     foreach ($tabUsers as $user) : ?>
 
-        <div class="uneLigne">
+        <div class="uneLigne div-admin-user">
 
         <p><?php echo $user['login'] ?></p>
 
@@ -165,7 +165,7 @@
 
     foreach ($tabComm as $comm) : ?>
 
-        <div id="divCom<?php echo $temp; $temp++ ?>">
+        <div class="div-admin-comm" id="divCom<?php echo $temp; $temp++ ?>">
 
             <div class="uneLigne">
 
@@ -175,7 +175,7 @@
 
             </div>
 
-            <p>Contenu : <?php echo $comm['contenu'] ?></p>
+            <p class="admin-content">Contenu : <?php echo $comm['contenu'] ?></p>
 
             <button class="modif" name="<?php echo $comm['id'] ?>">Mofify comment</button>
             <button class="suppr" name="<?php echo $comm['id'] ?>">Delete comment</button>
@@ -191,8 +191,7 @@
     $req = $conn->prepare($sql);
     $req->execute(array(':comId' => $_GET['idCom']));
     $tab = $req->fetchAll(PDO::FETCH_ASSOC);
-
-    var_dump($tab); ?>
+    ?>
 
     <form id='<?php echo $tab[0]['id'] ?>'>
         <textarea name="contenuComModif" cols="40" rows="7"><?php echo $tab[0]['contenu'] ?></textarea>
@@ -238,10 +237,10 @@
 
     foreach ($tabArt as $article) : ?>
 
-        <div id="divArt<?php echo $temp; $temp++ ?>">
+        <div class="div-admin-article" id="divArt<?php echo $temp; $temp++ ?>">
 
-            <h4><?php echo $article['titre'] ?></h4>
-            <p><?php echo $article['nom'] ?></p>
+            <h4 class="admin-title"><?php echo $article['titre'] ?></h4>
+            <p class="admin-categories"><?php echo $article['nom'] ?></p>
             
             <div class="uneLigne">
 
@@ -250,8 +249,8 @@
 
             </div>
 
-            <p>Contenu :</p>
-            <p><?php echo $article['contenu'] ?></p>
+            <p class="admin-title-content">Contenu :</p>
+            <p class="admin-content"><?php echo $article['contenu'] ?></p>
 
             <button class="modif" name="<?php echo $article['id'] ?>">Mofify article</button>
             <button class="suppr" name="<?php echo $article['id'] ?>">Delete article</button>
@@ -336,12 +335,12 @@
 
         <?php foreach ($tabCat as $categorie) : ?>
 
-            <div class="uneLigne" id="ligne<?php echo $temp; $temp++ ?>">
+            <div class="uneLigne div-admin-categorie" id="ligne<?php echo $temp; $temp++ ?>">
 
                 <p><?php echo $categorie['nom'] ?></p>
 
-                <button class="modif" name="<?php echo $categorie['id'] ?>">Modify category</button>
-                <button class="suppr" name="<?php echo $categorie['id'] ?>">Delete category</button>
+                <button class="modif-cat" name="<?php echo $categorie['id'] ?>">Modify category</button>
+                <button class="suppr-cat" name="<?php echo $categorie['id'] ?>">Delete category</button>
 
             </div>
             

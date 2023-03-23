@@ -87,11 +87,15 @@
                 }
             ?>
 
-            <article id="flex-article"></article>
+            <article id="flex-article">
+
+            </article>
 
         </div>
 
-        <div id="pagination"></div>
+        <div id="pagination">
+
+        </div>
 
     </main>
 

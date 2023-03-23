@@ -197,7 +197,7 @@ displayChangeCat.addEventListener('click', async() => {
 
     await displayCat();
 
-    const modifCatButtons = document.getElementsByClassName('modif');
+    const modifCatButtons = document.getElementsByClassName('modif-cat');
 
     let temp = 1;
     
@@ -233,7 +233,7 @@ displayChangeCat.addEventListener('click', async() => {
         })
     }
 
-    const supprCatButtons = document.getElementsByClassName('suppr');
+    const supprCatButtons = document.getElementsByClassName('suppr-cat');
 
     for(let supprCat of supprCatButtons) {
 
