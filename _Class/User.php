@@ -273,6 +273,7 @@ class User
     public function setPP($URL) {
 
         $chemin = new SplFileInfo($URL);
+        echo $URL;
         $format = $chemin->getExtension();
 
         $sql = "INSERT INTO photos_profil (`id_utilisateur`, `image`, `format`) VALUES (:user , :photo , :format)";
@@ -280,6 +281,16 @@ class User
         $req->execute(array(':user' => 1,
                             ':photo' => file_get_contents($URL),
                             ':format' => $format
+        ));
+    }
+
+    public function unsetPP() {
+
+        $sql = "UPDATE photos_profil SET `image` = :photo, format = :format WHERE id_utilisateur = :user";
+        $req = $this->conn->prepare($sql);
+        $req->execute(array(':photo' => "",
+                            ':user' => 1,
+                            ':format' => ""
         ));
     }
 
@@ -302,15 +313,6 @@ class User
 
         return $img[0]['format'];
 
-    }
-
-    public function unsetPP() {
-
-        $sql = "UPDATE photos_profil SET `image` = :photo WHERE id = :id";
-        $req = $this->conn->prepare($sql);
-        $req->execute(array(':photo' => "",
-                            ':id' => 1
-        ));
     }
 }
 

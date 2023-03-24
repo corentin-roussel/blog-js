@@ -431,13 +431,27 @@
 
     if(isset($_GET['setPicture'])) {
     
-        $user->setPP('https://img2.freepng.fr/20180401/dbq/kisspng-user-profile-computer-icons-profile-5ac09245049c32.0935523415225697970189.jpg');
+        var_dump($_POST);
+        $user->setPP($_POST['file']);
+        echo 'ok';
+    
+    }
+
+    if(isset($_GET['unsetPicture'])) {
+    
+        $user->unsetPP();
     
     }
     
     if(isset($_GET['getPicture'])) {
 
         echo $user->getPP();
+    
+    }
+    
+    if(isset($_GET['getPictureFormat'])) {
+
+        echo $user->getPPformat();
     
     }
 

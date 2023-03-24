@@ -3,23 +3,37 @@
     require_once '_Class/User.php';
 
     $user = new User();
-    
-    //$user->setPP('https://img-19.commentcamarche.net/cI8qqj-finfDcmx6jMK6Vr-krEw=/1500x/smart/b829396acc244fd484c5ddcdcb2b08f3/ccmcms-commentcamarche/20494859.jpg');
+
+    // $user->setPP('profil.php')
     
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="testImage.js" defer></script>
     <title>Test</title>
 </head>
+
 <body>
-    <p>Ceci est mon image</p>
-    <div class="image"><img src="data:image/<?php echo $user->getPPformat() ?>;base64,<?php echo $user->getPP(); ?>" width="50px" height="50px"/></div>
+
+    <img id="profileImage" src="data:image/<?php echo $user->getPPformat() ?>;base64,<?php echo $user->getPP(); ?>" width="50px" height="50px"/>
+
+    <form id="changePPform">
+
+        <label for="picture">Change your profil picture :</label>
+        <input type="file" id="picture" name="picture" accept="image/png, image/jpeg, image/webp, image/jpg">
+
+        <button type="submit">Change</button>
+
+    </form>
+
 </body>
+
 </html>
 
 <?php //$user->unsetPP() ?>
